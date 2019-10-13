@@ -15,7 +15,7 @@ conloop(), this takes to arguments the first one being condition and the second 
 do_conloop(), similar to do-while loop in PHP and is very simple to execute only requiring two arguments the first one being code and the second one being condition.
 
 # Where language/library/framework shines
-This shines in it's easy ways to do certain tasks but it doesn't come at too big cost of flexibility because yu can justexecute python directly if you want to.
+This shines in it's easy ways to do certain tasks but it doesn't come at too big cost of flexibility because you can just execute python directly if you want to.
 
 magnet_sim(), this takes two required arguments first one being sources for example what your magnets are and what are there positions and power and the second one being m,anupulation where you can manipulate your magnets to rotate and move.
 
