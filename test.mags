@@ -1,0 +1,5 @@
+from functions import *
+
+surface_obj = SchwarzschildEmbedding(5.927e23 * units.kg)
+surface_obj.plot_hypersurface(plot_type='surface')
+surface_obj.show()
