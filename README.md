@@ -17,7 +17,7 @@ do_conloop(), similar to do-while loop in PHP and is very simple to execute only
 # Where language/library/framework shines
 This shines in it's easy ways to do certain tasks but it doesn't come at too big cost of flexibility because you can just execute python directly if you want to.
 
-magnet_sim(), this takes two required arguments first one being sources for example what your magnets are and what are there positions and power and the second one being m,anupulation where you can manipulate your magnets to rotate and move.
+magnet_sim(), this takes two required arguments first one being sources for example what your magnets are and what are there positions and power and the second one being manupulation where you can manipulate your magnets to rotate and move.
 
 heatmap_image(), this can give you the heatmap of an image by just a single required argument that being image and then there are many optional arguments and here's a list of these argumaents data(boolean) meaning is this image an already read array or just a plain image,
 cmap(string) default cmap is coolwarm, vmin, vmax, center(float) default is 0.5, robust and figsize(list of two integers that determines size of the figure).
