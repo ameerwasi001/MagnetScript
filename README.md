@@ -41,8 +41,8 @@ PySimpleGUI is required for running interpreter.py<br/>
 and many functions can't be simplified for example in test.mags there's a really simple way to make basic Schwarzschild spacetime simulation which in my opinion cannot be further simplified but, you can contribute to this project and you might have a better idea.
 
 # Upcoming plans
-Speeding this up and splitting functions.py in multiple files
-Adding more functions and mak further simplifications
-Make Galgebra easier
-Make use of asropy extensively
+Speeding this up and splitting functions.py in multiple files<br/>
+Adding more functions and mak further simplifications<br/>
+Make Galgebra easier<br/>
+Make use of asropy extensively<br/>
 Simple setup.py to install all libraries for use
