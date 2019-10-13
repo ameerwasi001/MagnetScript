@@ -36,6 +36,7 @@ astropy<br/>
 EinsteinPy<br/>
 galgebra<br/>
 skimage<br/>
+PySimpleGUI is required for running interpreter.py<br/>
 
 and many functions can't be simplified for example in test.mags there's a really simple way to make basic Schwarzschild spacetime simulation which in my opinion cannot be further simplified but, you can contribute to this project and you might have a better idea.
 
