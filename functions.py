@@ -173,3 +173,23 @@ def image_show(image, cmap='viridis', interpolation='nearest', alpha=1, vmin=Non
 
     fig.tight_layout()
     plt.show()
+
+#black hole simulation with ergosphere and horizon in MagnetScript(still in beta)
+def black_sim(M, a):
+    ergo, hori = list(), list()
+    thetas = np.linspace(0, np.pi, 720)
+    for t in thetas:
+        ergo.append(kerr_utils.radius_ergosphere(M, a, t, "Spherical"))
+        hori.append(kerr_utils.event_horizon(M, a, t, "Spherical"))
+    ergo, hori = np.array(ergo), np.array(hori)
+
+
+    Xe2, Ye2 = ergo[:,0] * np.sin(ergo[:,1]), ergo[:,0] * np.cos(ergo[:,1])
+    Xh2, Yh2 = hori[:,0] * np.sin(hori[:,1]), hori[:,0] * np.cos(hori[:,1])
+
+    # for displaying ordinary blackhole
+    fig, ax = plt.subplots()
+    ax.fill(Xh2, Yh2, 'b', Xe2, Ye2, 'r', alpha=0.3)
+    ax.fill(-1*Xh2, Yh2, 'b', -1*Xe2, Ye2, 'r', alpha=0.3)
+
+    plt.show()
