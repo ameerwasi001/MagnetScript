@@ -41,7 +41,7 @@ and many functions can't be simplified for example in test.mags there's a really
 
 # Upcoming plans
 Speeding this up and splitting functions.py in multiple files<br/>
-Adding more functions and mak further simplifications<br/>
+Adding more functions and make further simplifications<br/>
 Make Galgebra easier<br/>
 Make use of asropy extensively<br/>
 Simple setup.py to install all libraries for use
