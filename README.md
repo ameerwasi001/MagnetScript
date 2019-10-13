@@ -28,14 +28,14 @@ image_show(), this basically takes your image and shows it with required argumen
 
 # Additional simplifications
 This is based on following libraries
-numpy
-scipy
-magpylib
-seaborn
-astropy
-EinsteinPy
-galgebra
-skimage
+numpy<br/>
+scipy<br/>
+magpylib<br/>
+seaborn<br/>
+astropy<br/>
+EinsteinPy<br/>
+galgebra<br/>
+skimage<br/>
 
 and many functions can't be simplified for example in test.mags there's a really simple way to make basic Schwarzschild spacetime simulation which in my opinion cannot be further simplified but, you can contribute to this project and you might have a better idea.
 
