@@ -23,7 +23,7 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝘄𝗮𝘀𝗵𝘁𝗿𝗲𝗱_𝗶𝗺𝗮𝗴𝗲(), basically a washtred effect with one required and three optional arguments, required one is image which is quite self explanatory... Optional areguments are data(boolean) meaning that is it an array or just a good ole image, output(boolean) it means that do you want it to be an output image or an output array, figsize(list) should have two indexes and it determines height and width of the displayed image.
 
-𝗯𝗹𝗮𝗰𝗸_𝘀𝗶𝗺(), it can generate simulations for blackholes it takes two parameters both are required but these parameters are not yet named well because this function is not yet complete but is completely working.
+𝗯𝗹𝗮𝗰𝗸_𝘀𝗶𝗺(), it can generate simulations for blackholes it takes two parameters both are required but these parameters are basic characteristics of blackhole and you need to give those in order for this function to work.
 
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
