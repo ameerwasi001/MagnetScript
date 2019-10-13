@@ -18,6 +18,7 @@ from einsteinpy.bodies import *
 from einsteinpy.geodesic import *
 from einsteinpy.hypersurface import *
 from einsteinpy.symbolic import *
+from einsteinpy.utils import *
 
 from galgebra.printer import *
 from galgebra.ga import *
