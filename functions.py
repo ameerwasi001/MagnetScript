@@ -81,13 +81,13 @@ def magnet_sim(sources, manipulation):
     axis = {'x': linspace(-10,10,30),
             'y': linspace(-10,10,30)
            }
-    Bfield = array([[magnets_collection.getB([x,0,y]) for x in axis['x']] for y in axis['y']])
+    Bfield = np.array([[magnets_collection.getB([x,0,y]) for x in axis['x']] for y in axis['y']])
 
     #display field in xz-plane using matplotlib
     fig2, ax = plt.subplots()
-    X,Z = meshgrid(axis['x'],axis['y'])
+    X,Z = np.meshgrid(axis['x'],axis['y'])
     U,V = Bfield[:,:,0], Bfield[:,:,2]
-    ax.streamplot(X, Z, U, V, color=log(U**2+V**2), density=2)
+    ax.streamplot(X, Z, U, V, color=np.log(U**2+V**2), density=2)
 
     #show plots
     plt.show()
