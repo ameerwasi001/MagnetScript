@@ -28,7 +28,7 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
 # Additional simplifications
-This is based on following libraries
+This is based on following libraries<br/>
 numpy<br/>
 scipy<br/>
 magpylib<br/>
