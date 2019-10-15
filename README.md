@@ -45,8 +45,8 @@ and many functions can't be simplified for example in test.mags there's a really
 This is the command line tool to use with MagnetScript to speed up this simulation and calculation programs because it loads all libraries and functions from 'functions.py' but to speed it up you need to not add or remove line 'from functions import *' because doing otherwise would reload all functions and libraries. This tool is better then GUI interpreter because it won't stop running after execution of every simulation so, all you need to do to know how to use this tool is to type 'help()' in terminal inside this program to know all currently avalible command and remember that more are indeed coming soon.
 
 # Upcoming plans
-:heavy_check_mark:Speeding this up and splitting functions.py in multiple files<br/>
-Adding more functions and make further simplifications<br/>
-Make Galgebra easier<br/>
-Make use of asropy extensively<br/>
-Simple setup.py to install all libraries for use
+:heavy_check_mark:Speeding this up by ~~splitting functions.py in multiple files~~ making a CLI program.<br/>
+Adding more functions and make further simplifications.<br/>
+Make Galgebra easier.<br/>
+Make use of asropy extensively.<br/>
+Simple setup.py to install all libraries for use.
