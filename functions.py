@@ -116,7 +116,7 @@ def heatmap_image(image, data=False, cmap='coolwarm', vmin=None, vmax=None, cent
 
 
 #Contrast a image with MagnetScript (Parameters aren't yet configured well)
-def washtred_image(image, data=False, output=True, figsize=[6,4]):
+def washtred_image(image, data=False, output=True, cmap='nipy_spectral', figsize=[6,4]):
 
     if not data:
         image = imread(image, as_gray=True)
@@ -144,7 +144,7 @@ def washtred_image(image, data=False, output=True, figsize=[6,4]):
         fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
         ax = axes.ravel()
 
-        ax[0].imshow(gradient, cmap=plt.cm.nipy_spectral, interpolation='nearest')
+        ax[0].imshow(gradient, plt.cm.get_cmap(cmap), interpolation='nearest')
         ax[0].set_title("Local Gradient")
 
 
@@ -175,7 +175,8 @@ def image_show(image, cmap='viridis', interpolation='nearest', alpha=1, vmin=Non
     fig.tight_layout()
     plt.show()
 
-#black hole simulation with ergosphere and horizon in MagnetScript(still in beta)
+
+#black hole simulation with ergosphere and horizon in MagnetScript
 def black_sim(M, a):
     ergo, hori = list(), list()
     thetas = np.linspace(0, np.pi, 720)
