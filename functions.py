@@ -18,6 +18,7 @@ from einsteinpy.bodies import *
 from einsteinpy.geodesic import *
 from einsteinpy.hypersurface import *
 from einsteinpy.symbolic import *
+from einsteinpy.metric import *
 from einsteinpy.utils import *
 
 from galgebra.printer import *
@@ -195,3 +196,33 @@ def black_sim(M, a):
     ax.fill(-1*Xh2, Yh2, 'b', -1*Xe2, Ye2, 'r', alpha=0.3)
 
     plt.show()
+
+
+#Calculating an orbit's eccentricity and apehelion and making a simulation(More extensibility coming soon)
+def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, stepsize=((5 * units.min).to(units.s)).value):
+    obj = Schwarzschild.from_coords(sph_obj, M)
+    ans = obj.calculate_trajectory(
+        end_lambda=end_lambda, OdeMethodKwargs={"stepsize": stepsize}, return_cartesian=True
+    )
+
+    ans[0].shape, ans[1].shape
+
+    r = np.sqrt(np.square(ans[1][:, 1]) + np.square(ans[1][:, 2]))
+    i = np.argmax(r)
+    (r[i] * units.m).to(units.km)
+
+    ((ans[1][i][6]) * units.m / units.s).to(units.km / units.s)
+
+    xlist, ylist = ans[1][:, 1], ans[1][:, 2]
+    i = np.argmax(ylist)
+    x, y = xlist[i], ylist[i]
+    eccentricity = x / (np.sqrt(x ** 2 + y ** 2))
+    eccentricity
+
+    Sun = Body(name="Sun", mass=M, parent=None)
+    Object = Body(name="Earth", differential=sph_obj, parent=Sun)
+    geodesic = Geodesic(body=Object, time=0 * units.s, end_lambda=end_lambda, step_size=stepsize)
+
+    sgp = GeodesicPlotter()
+    sgp.plot(geodesic)
+    sgp.show()
