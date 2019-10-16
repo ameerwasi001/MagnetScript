@@ -27,7 +27,7 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
-𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and two optional arguments(one more coming soon for more flexibility), the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda and second one is stepsize sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
+𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and three optional arguments, the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda, second one is stepsize and the last one is Object that I would explain in a bit sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
 ```
 M = 1.989e30 * units.kg  # mass of sun
 distance = 147.09e6 * units.km
@@ -45,6 +45,15 @@ Running this with sciencere would give you earth's orbit and I hope this let's y
 end_lambda=((1 * units.year).to(units.s)).value
 stepsize=((5 * units.min).to(units.s)).value
 ```
+about that Object argument, honestly the best way to understand it to see the default code here but, I would summarize it a bit by saying you have to define some variables that being bodies with their poperties then link them through a property called 'parent' and then pass last variable(Object) in chain to the function using this argument and here's the default cde for you to easily understand
+
+```
+Sun = Body(name="Sun", mass=M, parent=None)
+Object = Body(name="Earth", differential=sph_obj, parent=Sun)
+
+#Pass Object in "orbit_eccer_sim()"
+```
+
 Now, that I have attempted to try to explain this so, I hope I have explained this and that's it for this function.
 # Additional simplifications
 This is based on following libraries<br/>
