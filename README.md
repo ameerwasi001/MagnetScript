@@ -29,13 +29,13 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and two optional arguments(one more coming soon), the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda and second one is stepsize sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
 ```
-M = 1.989e30 * u.kg  # mass of sun
-distance = 147.09e6 * u.km
-speed_at_perihelion = 30.29 * u.km / u.s
-omega = (u.rad * speed_at_perihelion) / distance
+M = 1.989e30 * units.kg  # mass of sun
+distance = 147.09e6 * units.km
+speed_at_perihelion = 30.29 * units.km / units.s
+omega = (units.rad * speed_at_perihelion) / distance
 
-sph_obj = SphericalDifferential(distance, np.pi / 2 * u.rad, np.pi * u.rad,
-                               0 * u.km / u.s, 0 * u.rad / u.s, omega)
+sph_obj = SphericalDifferential(distance, np.pi / 2 * units.rad, np.pi * units.rad,
+                               0 * units.km / units.s, 0 * units.rad / units.s, omega)
 
 orbit_eccer_sim(sph_obj, M)
 ```
