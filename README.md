@@ -54,7 +54,7 @@ Object = Body(name="Earth", differential=sph_obj, parent=Sun)
 #Pass Object in "orbit_eccer_sim()"
 ```
 
-Now, that I have attempted to try to explain this so, I hope I have explained this and that's it for this function.
+Now, that I have attempted to explain this so, I hope I have explained this well and that's it for this function.
 # Additional simplifications
 This is based on following libraries<br/>
 numpy<br/>
