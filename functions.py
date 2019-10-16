@@ -219,7 +219,7 @@ def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value,
     eccentricity = x / (np.sqrt(x ** 2 + y ** 2))
     eccentricity
 
-    if Object is None:
+    if Object == None:
         Sun = Body(name="Sun", mass=M, parent=None)
         Object = Body(name="Earth", differential=sph_obj, parent=Sun)
         
