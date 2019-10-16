@@ -198,8 +198,8 @@ def black_sim(M, a):
     plt.show()
 
 
-#Calculating an orbit's eccentricity and apehelion and making a simulation(More extensibility coming soon)
-def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, stepsize=((5 * units.min).to(units.s)).value):
+#Calculating an orbit's eccentricity and apehelion and making a simulation
+def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, stepsize=((5 * units.min).to(units.s)).value, Object=None):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs={"stepsize": stepsize}, return_cartesian=True
@@ -219,8 +219,10 @@ def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value,
     eccentricity = x / (np.sqrt(x ** 2 + y ** 2))
     eccentricity
 
-    Sun = Body(name="Sun", mass=M, parent=None)
-    Object = Body(name="Earth", differential=sph_obj, parent=Sun)
+    if Object is None:
+        Sun = Body(name="Sun", mass=M, parent=None)
+        Object = Body(name="Earth", differential=sph_obj, parent=Sun)
+        
     geodesic = Geodesic(body=Object, time=0 * units.s, end_lambda=end_lambda, step_size=stepsize)
 
     sgp = GeodesicPlotter()
