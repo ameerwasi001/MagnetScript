@@ -27,7 +27,7 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
-𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and two optional arguments(one more coming soon), the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda and second one is stepsize sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
+𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and two optional arguments(one more coming soon for more flexibility), the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda and second one is stepsize sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
 ```
 M = 1.989e30 * units.kg  # mass of sun
 distance = 147.09e6 * units.km
