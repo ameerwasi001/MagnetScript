@@ -43,8 +43,8 @@ def forloop(num_of_times, code):
 
 
 #'Print' or in this case 'echo' anything in MagnetScript
-def echo(value):
-    print(value)
+def echo(*values):
+    print(*values)
 
 
 #while loop in MagnetScript
