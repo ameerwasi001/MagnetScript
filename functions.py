@@ -20,6 +20,7 @@ from einsteinpy.hypersurface import *
 from einsteinpy.symbolic import *
 from einsteinpy.metric import *
 from einsteinpy.utils import *
+from skimage.util import *
 
 from galgebra.printer import *
 from galgebra.ga import *
