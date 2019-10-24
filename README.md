@@ -3,16 +3,37 @@ This is a pretty simple language or a python framework for people who want to ke
 
 For now there are very few methods/functions in this framework/language compared to many but, I am continuously developing it. For now it's a bit slow but I am trying to find a soulution so, if any one of you have any suggestion please help me.
 
-# Basic functions and arguments
-So in this section I will list a bunch of functions with their required and optional arguments
+# Basic keywords and statements
+So in this section I will list a bunch of keywords and statements in this language and more are coming soon
 
-𝗳𝗼𝗿𝗹𝗼𝗼𝗽(), this will make your code run multiple times in a loop and and there are only two arguments and both are required first one being how many numbers of time should the code run and code should be a string variable or a function called inside of quotes if possible.
+iterate, it's similar to for loop in ther languages and here it is followed by a new variable for loop's local scope, then followed by inside keyword and then followed by an actual already defined variable and for kicks here's a simple example
+```
+word="Hello World!"
 
-𝗲𝗰𝗵𝗼(), pretty much same as print.
+iterate letter inside word:
+  echo(letter)
+```
 
-𝗰𝗼𝗻𝗹𝗼𝗼𝗽(), this takes to arguments the first one being condition and the second one being code which should be better be a variable declared in quotes or function called inside of quotes in this function.
+𝗲𝗰𝗵𝗼(), pretty much same as print which basically prints out your statement on the console.
 
-𝗱𝗼_𝗰𝗼𝗻𝗹𝗼𝗼𝗽(), similar to do-while loop in PHP and is very simple to execute only requiring two arguments the first one being code and the second one being condition.
+When, this is similar to while in other languages and is simply followed by a condition inside paranthesis then followed by ```:``` and then indexed similar to python and here's an example
+```
+x=0
+word="Hello"
+
+when(x<len(word)):
+  echo(word[x])
+  x+=1
+```
+
+function, this is similat to function keyword in many languages and def in python and by using this, you can execute following example
+```
+function sum(num1, num2):
+  num=num1+num2
+  echo(num)
+
+sum(9, 10)
+```
 
 # Where language/library/framework shines
 This shines in it's easy ways to do certain tasks but it doesn't come at too big cost of flexibility because you can just execute python directly if you want to.
