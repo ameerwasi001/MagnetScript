@@ -7,6 +7,7 @@ print('Loaded!!!')
 def file(path):
     path = open(path, "r+")
     content = path.read()
+    content = content.replace('function ', 'def ')
     exec(content)
 
 def libraries():
@@ -43,7 +44,3 @@ while True:
       exec(given)
     except Exception as error:
       print(error)
-    
-    
-
-
