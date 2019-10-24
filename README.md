@@ -25,6 +25,15 @@ when(x<len(word)):
   echo(word[x])
   x+=1
 ```
+unless, pretty similar to "if not" and should always be followed by a space to be recogonized correctly and here's an example
+```
+num=20
+
+unless num>=20:
+  echo(num, "is less than 20")
+else:
+  echo(num, "is greater than or equal to 20")
+```
 
 function, this is similat to function keyword in many languages and def in python and by using this, you can execute following example
 ```
