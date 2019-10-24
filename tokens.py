@@ -1,8 +1,10 @@
+import re
+
 def tokenize(content):
-    content = content.replace('function ', 'def ')
-    content = content.replace('iterate ', 'for ')
-    content = content.replace('inside ', 'in ')
+    content = re.sub(r"\bfunction \b","def ",content)
+    content = re.sub(r"\biterate \b","for ",content)
+    content = re.sub(r"\binside \b","in ",content)
     content = content.replace('when ', 'while ')
     content = content.replace('when(', 'while(')
-    content = content.replace('unless ', 'if not ')
+    content = re.sub(r"\bunless \b","if not ",content)
     return content
