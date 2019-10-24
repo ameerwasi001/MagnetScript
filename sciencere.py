@@ -2,12 +2,13 @@ print("""Thanks for using MagnetScript. To make your simulations as fast as poss
 print("Loading dependencies...")
 from functions import *
 import os
+import tokens
 print('Loaded!!!')
 
 def file(path):
     path = open(path, "r+")
     content = path.read()
-    content = content.replace('function ', 'def ')
+    content = tokens.tokenize(content)
     exec(content)
 
 def libraries():
