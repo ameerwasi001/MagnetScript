@@ -43,6 +43,16 @@ function sum(num1, num2):
 
 sum(9, 10)
 ```
+## String formatting(Important)
+This is by far the most distinct and important to read feature for this language is that certain words that are specifically reserved for this langugage should be covered with curly and then square brace such as ```{[unless]}``` and here are the list of keywords that should be wrapped in curly square brackets (More ight be added).
+```
+function
+iterate
+while
+inside
+when
+unless
+```
 
 # Where language/library/framework shines
 This shines in it's easy ways to do certain tasks but it doesn't come at too big cost of flexibility because you can just execute python directly if you want to.
