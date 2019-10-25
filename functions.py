@@ -35,6 +35,7 @@ from skimage.io import *
 from skimage.color import *
 
 import inspect
+import tokens
 
 #for loop in MagnetScript
 def forloop(num_of_times, code):
@@ -47,6 +48,11 @@ def forloop(num_of_times, code):
 def echo(*values):
     print(*values)
 
+
+def processed_input(str_to_show):
+    content = input(str_to_show)
+    content = tokens.tokenize(content)
+    return content
 
 #while loop in MagnetScript
 def conloop(condition, code):
