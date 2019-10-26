@@ -35,6 +35,7 @@ from skimage.io import *
 from skimage.color import *
 
 import inspect
+from importlib.machinery import SourceFileLoader
 import tokens
 
 #for loop in MagnetScript
@@ -70,6 +71,11 @@ def do_conloop(code, condition):
         if not eval(str(condition), frame.f_globals, frame.f_locals):
            break
 
+#importing a file in MagnetScript
+def require(file, name="imported"):
+    loader = SourceFileLoader(name,file)
+    loaded = loader.load_module()
+    return loaded
 
 #magnetic simulation with MagnetScript
 def magnet_sim(sources, manipulation):
