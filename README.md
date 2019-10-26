@@ -16,6 +16,12 @@ iterate letter inside word:
 
 𝗲𝗰𝗵𝗼(), pretty much same as print which basically prints out your statement on the console.
 
+𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), you can use it to import files in your program. It takes two arguments the first one being path to the file and the second ptional one being name. Here's a simple example
+```
+o=require("./o.xran")
+o.userDefinedSum(11, 10)
+```
+
 When, this is similar to while in other languages and is simply followed by a condition inside paranthesis then followed by ```:``` and then indexed similar to python and here's an example
 ```
 x=0
@@ -48,7 +54,6 @@ This is by far the most distinct and important to read feature for this language
 ```
 function
 iterate
-while
 inside
 when
 unless
