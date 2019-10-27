@@ -80,7 +80,7 @@ def require(file, name="imported"):
     return loaded
 
 #importing a MagnetScript file in MagnetScript
-def mg_require(module_name):
+def mgs_require(module_name):
     with open(module_name) as f:
         source = f.read()
     source = tokens.tokenize(source)
