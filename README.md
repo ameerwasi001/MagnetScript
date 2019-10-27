@@ -21,7 +21,7 @@ iterate letter inside word:
 o=require("./o.pyclass")
 o.userDefinedSum(11, 10)
 ```
-mgs_require(), it takes a single argument that being path to a MagnetScript file and it imports it and here's an example
+mgs_require(), it takes a single argument that being path to a MagnetScript file(Important: You need to ```import functions``` in imported file) and it imports it and here's an example
 ```
 o=mgs_require("./o.mags")
 o.userDefinedSum(11, 10)
