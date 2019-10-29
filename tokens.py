@@ -8,6 +8,7 @@ def tokenize(content):
     content = content.replace('when(', 'while(')
     content = re.sub(r"\bunless \b","if not ",content)
     content = content.replace('=>| ', '= lambda ')
+    content = content.replace('>| ', 'lambda ')
 
     #It should remain last in order otherwise many words with strings will break
     content = content.replace('{[', '')
