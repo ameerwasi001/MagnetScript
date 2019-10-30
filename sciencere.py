@@ -6,9 +6,13 @@ import tokens
 print('Loaded!!!')
 
 def file(path):
-    path = open(path, "r+")
-    content = path.read()
-    content = tokens.tokenize(content)
+    file = open(path, "r+")
+    lines = file.readlines()
+    linenum = 0
+    while(linenum<len(lines)):
+        lines[linenum] = tokens.tokenize(lines[linenum])
+        linenum+=1
+    content = '\n'.join(lines)
     exec(content)
 
 def libraries():
@@ -40,8 +44,9 @@ def terminal(command):
 
 while True:
     given = input('>>>')
-
+    given = tokens.tokenize(given)
     try:
+        
       exec(given)
     except Exception as error:
       print(error)
