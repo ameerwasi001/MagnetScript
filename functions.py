@@ -73,6 +73,10 @@ def do_conloop(code, condition):
         if not eval(str(condition), frame.f_globals, frame.f_locals):
            break
 
+#Reverse a string
+def strreverse(string):
+    return string[::-1]
+
 #importing a python file in MagnetScript
 def require(file, name="imported"):
     loader = SourceFileLoader(name,file)
