@@ -85,8 +85,13 @@ def require(file, name="imported"):
 
 #importing a MagnetScript file in MagnetScript
 def mgs_require(module_name):
-    with open(module_name) as f:
-        source = f.read()
+    file = open(module_name, "r+")
+    lines = file.readlines()
+    linenum = 0
+    while(linenum<len(lines)):
+        lines[linenum] = tokens.tokenize(lines[linenum])
+        linenum+=1
+    source = '\n'.join(lines)
     source = tokens.tokenize(source)
     module = types.ModuleType(module_name)
     exec(source, module.__dict__)
