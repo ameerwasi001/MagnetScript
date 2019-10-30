@@ -16,6 +16,8 @@ iterate letter inside word:
 
 𝗲𝗰𝗵𝗼(), pretty much same as print which basically prints out your statement on the console.
 
+𝘀𝘁𝗿𝗿𝗲𝘃𝗲𝗿𝘀𝗲(), this function just takes a string and reverse it.
+
 𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), you can use it to import files in your program. It takes two arguments the first one being path to the file and the second ptional one being name. Here's a simple example
 ```
 o=require("./o.pyclass")
