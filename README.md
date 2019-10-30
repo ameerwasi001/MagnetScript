@@ -3,6 +3,9 @@ This is a pretty simple language or a python framework for people who want to ke
 
 For now there are very few methods/functions in this framework/language compared to many but, I am continuously developing it. For now it's a bit slow but I am trying to find a soulution so, if any one of you have any suggestion please help me.
 
+# Language Runtime
+This language is compiled down to python at runtime so any valid python expression is a valid MagnetScript statement comprehensively making it a "transpiled" language and it all begins the moment you run your program with "sciencere" and in future I think you would be able to compile it down to python and take python source files with you directly from sciencere. 
+
 # Basic keywords and statements
 So in this section I will list a bunch of keywords and statements in this language and more are coming soon
 
