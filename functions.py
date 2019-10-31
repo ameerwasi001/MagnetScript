@@ -88,6 +88,7 @@ def mgs_require(module_name):
     file = open(module_name, "r+")
     lines = file.readlines()
     linenum = 0
+    lines[linenum] = "from functions import * \n" + lines[linenum]
     while(linenum<len(lines)):
         lines[linenum] = tokens.tokenize(lines[linenum])
         linenum+=1
