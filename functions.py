@@ -88,12 +88,11 @@ def mgs_require(module_name):
     file = open(module_name, "r+")
     lines = file.readlines()
     linenum = 0
-    lines[linenum] = "from functions import * \n" + lines[linenum]
+    lines.insert(0, "from functions import * \n")
     while(linenum<len(lines)):
         lines[linenum] = tokens.tokenize(lines[linenum])
         linenum+=1
     source = '\n'.join(lines)
-    source = tokens.tokenize(source)
     module = types.ModuleType(module_name)
     exec(source, module.__dict__)
     sys.modules[module_name] = module
