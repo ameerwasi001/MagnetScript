@@ -9,7 +9,7 @@ def tokenize(content):
     content = re.sub(r"\bunless \b","if not ",content)
     content = content.replace('>| ', 'lambda ')
 
-    #It should remain last in order otherwise many words with strings will break
+    #It should remain last in order otherwise many words within strings will break
     content = content.replace('{[', '')
     content = content.replace(']}', '')
     return content
