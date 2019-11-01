@@ -21,7 +21,7 @@ iterate letter inside word:
 
 𝘀𝘁𝗿𝗿𝗲𝘃𝗲𝗿𝘀𝗲(), this function just takes a string and reverse it.
 
-𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), you can use it to import files in your program. It takes two arguments the first one being path to the file and the second ptional one being name. Here's a simple example
+𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), you can use it to import files in your program. It takes two arguments the first one being path to the file and the second optional one being name. Here's a simple example
 ```
 o=require("./o.pyclass")
 o.userDefinedSum(11, 10)
@@ -84,7 +84,28 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
 
-frame_drag(), frame-drag function of kerr space=time in this function there are seven arguments but only two of them are required first of them being Boyer Lindquist 
+frame_drag(), frame-drag function of kerr space=time in this function there are seven arguments but only two of them are required first of them being Boyer Lindquist Object(BL_Obj) and the second one being Mass(M) and then there are other parameters for example here's a snippet to demonstrate basic functionality
+```
+M = 1.989e30 * units.kg
+a = 0.3 * units.m
+BL_obj = BoyerLindquistDifferential(50e5 * units.km, np.pi / 2 * units.rad, np.pi * units.rad,
+                                    0 * units.km / units.s, 0 * units.rad / units.s, 0 * units.rad / units.s,
+                                    a)
+
+frame_drag(BL_obj, M)
+```
+then there are stepsize and end lambda and defaults are
+```
+end_lambda=((1 * units.year).to(units.s)).value/930
+stepsize=((0.02 * units.min).to(units.s)).value
+```
+and other basic defaults like dot of the given color(dot_color='black'), scatter value(scatter_val=[0,0]) and size, that being default as 2.0 are 
+```
+scatter_val=[0,0]
+dot_color='black'
+size=0.2
+```
+For now these are the only parameters that are avalible in this function
 
 𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and three optional arguments, the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda, second one is stepsize and the last one is Object that I would explain in a bit sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
 ```
