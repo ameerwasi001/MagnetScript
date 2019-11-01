@@ -150,7 +150,7 @@ PySimpleGUI is required for running interpreter.py<br/>
 and many functions can't be simplified for example in test.mags there's a really simple way to make basic Schwarzschild spacetime simulation which in my opinion cannot be further simplified but, you can contribute to this project and you might have a better idea.
 
 # Sciencere
-This is the command line tool to use with MagnetScript to speed up this simulation and calculation programs because it loads all libraries and functions from 'functions.py' but to speed it up you need to not add or remove line 'from functions import *' because doing otherwise would reload all functions and libraries. This tool is better then GUI interpreter because it won't stop running after execution of every simulation so, all you need to do to know how to use this tool is to type 'help()' in terminal inside this program to know all currently avalible command and remember that more are indeed coming soon.
+This is the command line tool to use with MagnetScript to speed up this simulation and calculation programs because it loads all libraries and functions from 'functions.py' but to speed it up you need to not add or remove line ```from functions import *``` because doing otherwise would reload all functions and libraries. This tool is better then GUI interpreter because it won't stop running after execution of every simulation so, all you need to do to know how to use this tool is to type ```help()``` in terminal inside this program to know all currently avalible command and remember that more are indeed coming soon.
 
 # Upcoming plans
 :heavy_check_mark:Speeding this up by ~~splitting functions.py in multiple files~~ making a CLI program.<br/>
