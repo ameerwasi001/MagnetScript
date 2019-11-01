@@ -84,7 +84,7 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
 
-frame_drag(), frame-drag function of kerr space=time in this function there are seven arguments but only two of them are required first of them being Boyer Lindquist Object(BL_Obj) and the second one being Mass(M) and then there are other parameters for example here's a snippet to demonstrate basic functionality
+𝗳𝗿𝗮𝗺𝗲_𝗱𝗿𝗮𝗴(), frame-drag function of kerr space=time in this function there are seven arguments but only two of them are required first of them being Boyer Lindquist Object(BL_Obj) and the second one being Mass(M) and then there are other parameters for example here's a snippet to demonstrate basic functionality
 ```
 M = 1.989e30 * units.kg
 a = 0.3 * units.m
