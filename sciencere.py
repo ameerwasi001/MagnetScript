@@ -29,7 +29,7 @@ Matplotlib
 
 def help():
     print("""
-Foollowing are the all the commands that are avalible except the ones built into the functions.py
+Following are the all the commands that are avalible except the ones built into the functions.py
 
 libraries() -This command shows you all libraries that are used in fuctions.py and are loaded into this at the start of this program's execution
 
