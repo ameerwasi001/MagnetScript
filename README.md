@@ -83,6 +83,9 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
 
+
+frame_drag(), frame-drag function of kerr space=time in this function there are seven arguments but only two of them are required first of them being Boyer Lindquist 
+
 𝗼𝗿𝗯𝗶𝘁_𝗲𝗰𝗰𝗲𝗿_𝘀𝗶𝗺(), this function generates a body orbiting another one and it takes two required and three optional arguments, the first required one is Sphere's properties and second required one is Mass. For optinal one's first one is what is ending lamda, second one is stepsize and the last one is Object that I would explain in a bit sorry, if this was a bit confusing but here I have a bit of sample code for you to understand this function better
 ```
 M = 1.989e30 * units.kg  # mass of sun
