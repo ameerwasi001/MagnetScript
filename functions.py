@@ -232,6 +232,19 @@ def black_sim(M, a):
     plt.show()
 
 
+#Frame-dragging effect in Kerr space-time
+def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2,
+               end_lambda=((1 * units.year).to(units.s)).value/930, stepsize=((0.02 * units.min).to(units.s)).value):
+    obj = Kerr.from_coords(BL_obj, M)
+    ans = obj.calculate_trajectory(
+        end_lambda=end_lambda, OdeMethodKwargs={"stepsize": stepsize}, return_cartesian=True
+    )
+    x, y = ans[1][:,1], ans[1][:,2]
+
+    plt.scatter(x,y, s=size)
+    plt.scatter(scatter_val[0],scatter_val[1], c='{}'.format(dot_color))
+    plt.show()
+
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, stepsize=((5 * units.min).to(units.s)).value, Object=None):
     obj = Schwarzschild.from_coords(sph_obj, M)
