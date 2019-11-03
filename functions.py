@@ -77,6 +77,8 @@ def do_conloop(code, condition):
 def strreverse(string):
     return string[::-1]
 
+relpath = lambda path: os.path.dirname(os.path.realpath(os.path.abspath(path)))
+
 #importing a python file in MagnetScript
 def require(file, name="imported"):
     loader = SourceFileLoader(name,file)
@@ -90,7 +92,7 @@ def mgs_require(module_name):
     linenum = 0
     lines.insert(0, "from functions import * \n")
     while(linenum<len(lines)):
-        lines[linenum] = tokens.tokenize(lines[linenum])
+        lines[linenum] = tokens.tokenize(lines[linenum], directory=relpath(module_name))
         linenum+=1
     source = '\n'.join(lines)
     module = types.ModuleType(module_name)
