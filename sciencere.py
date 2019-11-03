@@ -5,7 +5,11 @@ import os
 import tokens
 print('Loaded!!!')
 
+directory = None
+
 def file(path):
+    global directory
+    directory = os.path.dirname(os.path.realpath(os.path.abspath(path)))
     file = open(path, "r+")
     lines = file.readlines()
     linenum = 0
