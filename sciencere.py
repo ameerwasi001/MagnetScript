@@ -5,16 +5,13 @@ import os
 import tokens
 print('Loaded!!!')
 
-directory = None
-
 def file(path):
-    global directory
     directory = os.path.dirname(os.path.realpath(os.path.abspath(path)))
     file = open(path, "r+")
     lines = file.readlines()
     linenum = 0
     while(linenum<len(lines)):
-        lines[linenum] = tokens.tokenize(lines[linenum])
+        lines[linenum] = tokens.tokenize(lines[linenum], directory=relpath(path))
         linenum+=1
     content = '\n'.join(lines)
     exec(content)
