@@ -74,8 +74,8 @@ def do_conloop(code, condition):
            break
 
 #Reverse a string
-def strreverse(string):
-    return string[::-1]
+def str_slice(string, slicevalues=[None,None,-1]):
+    return string[slicevalues[0]:slicevalues[1]:slicevalues[2]]
 
 relpath = lambda path: os.path.dirname(os.path.realpath(os.path.abspath(path)))
 
