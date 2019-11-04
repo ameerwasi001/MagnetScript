@@ -75,7 +75,10 @@ def do_conloop(code, condition):
 
 #Reverse a string
 def str_slice(string, slicevalues=[None,None,-1]):
-    return string[slicevalues[0]:slicevalues[1]:slicevalues[2]]
+    if(len(slicevalues) > 3):
+        raise ValueError('There can only be three slice values')
+    else:
+        return string[slicevalues[0]:slicevalues[1]:slicevalues[2]]
 
 relpath = lambda path: os.path.dirname(os.path.realpath(os.path.abspath(path)))
 
