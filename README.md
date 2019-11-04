@@ -19,7 +19,10 @@ iterate letter inside word:
 
 𝗲𝗰𝗵𝗼(), pretty much same as print which basically prints out your statement on the console.
 
-𝘀𝘁𝗿𝗿𝗲𝘃𝗲𝗿𝘀𝗲(), this function just takes a string and reverse it.
+𝘀𝘁𝗿_𝘀𝗹𝗶𝗰𝗲(), it takes two arguments the first one being mandatory that is a string to slice while the second one is optional and is a list that contains 3 indexes for slicing your string and by default it will reverse your string and here is an example of it cutting the last character of a string.
+```
+print(str_slice('Hello',[None,-1,None]))
+```
 
 𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), you can use it to import files in your program. It takes two arguments the first one being path to the file and the second optional one being name. Here's a simple example
 ```
