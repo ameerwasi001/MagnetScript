@@ -76,7 +76,7 @@ def do_conloop(code, condition):
 #Reverse a string
 def str_slice(string, slicevalues=[None,None,-1]):
     if(len(slicevalues) > 3):
-        raise ValueError('There can only be three slice values')
+        raise ValueError('There can only be three slice values in slice values but {} are given in {}'.format(len(slicevalues), [None,None,-1]))
     else:
         return string[slicevalues[0]:slicevalues[1]:slicevalues[2]]
 
