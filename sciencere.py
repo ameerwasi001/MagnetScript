@@ -3,6 +3,7 @@ print("Loading dependencies...")
 from functions import *
 import os
 import tokens
+from traceback import print_tb, format_exception
 print('Loaded!!!')
 
 def file(path):
@@ -47,7 +48,6 @@ while True:
     given = input('>>>')
     given = tokens.tokenize(given)
     try:
-        
-      exec(given)
+        exec(given)
     except Exception as error:
-      print(error)
+        print(''.join(format_exception(etype=type(error), value=error, tb=error.__traceback__)))
