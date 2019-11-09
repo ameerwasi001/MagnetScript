@@ -11,6 +11,7 @@ from scipy import ndimage as ndi
 from sympy import *
 
 import astropy.units as units
+from astropy import constants
 
 from einsteinpy.plotting import *
 from einsteinpy.coordinates import *
