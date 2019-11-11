@@ -155,12 +155,13 @@ def heatmap_image(image, data=False, cmap='coolwarm', vmin=None, vmax=None, cent
     plt.show()
 
 
-def bright_scale(image, data=False, outer_circle=False, dotted_lines=True, figsize=[6,4], cmap='gray', output=True):
+def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', output=True):
     if not data:
         image = imread(image)
-    image[:10] = 0
-    mask = image < 87
-    image[mask] = 255
+    if grayscale:
+        image[:10] = 0
+        mask = image < 87
+        image[mask] = 255
     if dotted_lines:
         inds_x = np.arange(len(image))
         inds_y = (4 * inds_x) % len(image)
