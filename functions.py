@@ -182,7 +182,7 @@ def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_l
         return image
 
 #Contrast a image with MagnetScript (Parameters aren't yet configured well)
-def washtred_image(image, data=False, output=True, cmap='nipy_spectral', figsize=[6,4]):
+def watershed_image(image, data=False, output=True, cmap='nipy_spectral', outvar='gradient',figsize=[6,4]):
 
     if not data:
         image = imread(image, as_gray=True)
@@ -205,12 +205,13 @@ def washtred_image(image, data=False, output=True, cmap='nipy_spectral', figsize
     # process the watershed
     labels = watershed(gradient, markers)
 
+    evluated = eval('outvar')
+
     if output:
         # display results
         fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
         ax = axes.ravel()
-
-        ax[0].imshow(gradient, plt.cm.get_cmap(cmap), interpolation='nearest')
+        ax[0].imshow(eval(evluated), plt.cm.get_cmap(cmap), interpolation='nearest')
         ax[0].set_title("Local Gradient")
 
 
