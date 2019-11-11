@@ -155,6 +155,28 @@ def heatmap_image(image, data=False, cmap='coolwarm', vmin=None, vmax=None, cent
     plt.show()
 
 
+def bright_scale(image, data=False, outer_circle=False, dotted_lines=True, figsize=[6,4], cmap='gray'):
+    if not data:
+        image = imread(image)
+    image[:10] = 0
+    mask = image < 87
+    image[mask] = 255
+    if dotted_lines:
+        inds_x = np.arange(len(image))
+        inds_y = (4 * inds_x) % len(image)
+        image[inds_x, inds_y] = 0
+
+    if outer_circle:
+        l_x, l_y = image.shape[0], image.shape[1]
+        X, Y = np.ogrid[:l_x, :l_y]
+        outer_disk_mask = (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2
+        image[outer_disk_mask] = 0
+
+    plt.figure(figsize=(figsize[0], figsize[1]))
+    plt.imshow(image, cmap=cmap)
+    plt.axis('off')
+    plt.show()
+
 
 #Contrast a image with MagnetScript (Parameters aren't yet configured well)
 def washtred_image(image, data=False, output=True, cmap='nipy_spectral', figsize=[6,4]):
