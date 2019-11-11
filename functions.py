@@ -221,7 +221,7 @@ def watershed_image(image, data=False, output=True, cmap='nipy_spectral', outvar
         fig.tight_layout()
         plt.show()
     else:
-        return gradient
+        return eval(evluated)
 
 
 #Show image with MagnetScript
