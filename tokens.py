@@ -10,7 +10,6 @@ def tokenize(content, directory='./'):
     content = content.replace('>| ', 'lambda ')
     content = content.replace('>: ', ':\t')
     content = content.replace('_dir_/', '{}/'.format(directory))
-    content = content.replace('\\', '/'.format(directory))
         
     #It should remain last in order otherwise many words within strings will break
     content = content.replace('{[', '')
