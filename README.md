@@ -26,12 +26,12 @@ print(str_slice('Hello',[None,-1,None]))
 
 𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), you can use it to import files in your program. It takes two arguments the first one being path to the file and the second optional one being name. Here's a simple example
 ```
-o=require("./o.pyclass")
+o=require("_dir_/o.pyclass")
 o.userDefinedSum(11, 10)
 ```
 𝗺𝗴𝘀_𝗿𝗲𝗾𝘂𝗶𝗿𝗲(), it takes a single argument that being path to a MagnetScript file and it imports it and here's an example
 ```
-o=mgs_require("./o.mags")
+o=mgs_require("_dir_/o.mags")
 o.userDefinedSum(11, 10)
 ```
 
