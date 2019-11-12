@@ -72,7 +72,7 @@ when
 unless
 >|
 >:
-\\(Kind of a last resort)
+\\
 ```
 
 # Where language/library/framework shines
