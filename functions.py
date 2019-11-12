@@ -81,7 +81,10 @@ def str_slice(string, slicevalues=[None,None,-1]):
     else:
         return string[slicevalues[0]:slicevalues[1]:slicevalues[2]]
 
-relpath = lambda path: os.path.dirname(os.path.realpath(os.path.abspath(path)))
+def relpath(path):
+    path = os.path.dirname(os.path.realpath(os.path.abspath(path)))
+    path = path.replace('\\', '/')
+    return path
 
 #importing a python file in MagnetScript
 def require(file, name="imported"):
