@@ -153,7 +153,7 @@ def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None
     else:
         ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=False, yticklabels=False, xticklabels=False)
 
-    ax.imshow(image, cmap=plt.cm.jet)
+    ax.imshow(image, cmap=plt.cm.get_cmap(cmap))
     ax.set_title(title)
     plt.show()
 
