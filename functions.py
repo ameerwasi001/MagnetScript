@@ -138,7 +138,7 @@ def magnet_sim(sources, manipulation):
 
 
 #Heatmap for images using MagnetScript
-def heatmap_image(image, data=False, cmap='coolwarm', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4]):
+def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4]):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -154,7 +154,7 @@ def heatmap_image(image, data=False, cmap='coolwarm', vmin=None, vmax=None, cent
         ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=False, yticklabels=False, xticklabels=False)
 
     ax.imshow(image, cmap=plt.cm.jet)
-    ax.set_title("Heatmap")
+    ax.set_title(title)
     plt.show()
 
 
@@ -185,7 +185,7 @@ def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_l
         return image
 
 #Contrast a image with MagnetScript (Parameters aren't yet configured well)
-def watershed_image(image, data=False, output=True, cmap='nipy_spectral', outvar='gradient',figsize=[6,4]):
+def watershed_image(image, data=False, output=True, cmap='nipy_spectral', title="Local Gradient", outvar='gradient', figsize=[6,4]):
 
     if not data:
         image = imread(image, as_gray=True)
@@ -215,7 +215,7 @@ def watershed_image(image, data=False, output=True, cmap='nipy_spectral', outvar
         fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
         ax = axes.ravel()
         ax[0].imshow(eval(evluated), plt.cm.get_cmap(cmap), interpolation='nearest')
-        ax[0].set_title("Local Gradient")
+        ax[0].set_title(title)
 
 
         for a in ax:
