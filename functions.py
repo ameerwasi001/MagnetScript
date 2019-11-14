@@ -34,6 +34,7 @@ from skimage.filters import *
 from skimage.util import img_as_ubyte
 from skimage.io import *
 from skimage.color import *
+from skimage.segmentation import *
 
 import inspect
 from importlib.machinery import SourceFileLoader
@@ -184,7 +185,41 @@ def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_l
     else:
         return image
 
-#Contrast a image with MagnetScript (Parameters aren't yet configured well)
+#Compact segmentation of an image with MagnetScript (Parameters aren't yet configured well)
+def compact_segmentation_image(image, data=False, outvar='segments_watershed', title='Compact watershed', figsize=[6,4], output=True):
+    if not data:
+        image = imread(image)
+
+    image = img_as_float(image[::2, ::2])
+
+    segments_fz = felzenszwalb(image, scale=100, sigma=0.5, min_size=50)
+    segments_slic = slic(image, n_segments=250, compactness=10, sigma=1)
+    try:
+        segments_quick = quickshift(image, kernel_size=3, max_dist=6, ratio=0.5)
+    except:
+        pass
+    gradient = sobel(rgb2gray(image))
+    segments_watershed = watershed(gradient, markers=250, compactness=0.001)
+
+    evaluated = eval('outvar')
+
+    if output:
+        fig, axes = plt.subplots(1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
+        ax = axes.ravel()
+
+        ax[0].imshow(mark_boundaries(image, eval(evluated)))
+        ax[0].set_title(title)
+
+        for a in ax.ravel():
+            a.set_axis_off()
+
+        plt.tight_layout()
+        plt.show()
+    else:
+        return eval(evaluated)
+
+        
+#Contrast an image with MagnetScript
 def watershed_image(image, data=False, output=True, interpolation="nearest", cmap='nipy_spectral', title="Local Gradient", outvar='gradient', figsize=[6,4]):
 
     if not data:
