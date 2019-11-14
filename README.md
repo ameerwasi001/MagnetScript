@@ -72,7 +72,6 @@ when
 unless
 >|
 >:
-\\
 ```
 
 # Where language/library/framework shines
@@ -80,11 +79,11 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝗺𝗮𝗴𝗻𝗲𝘁_𝘀𝗶𝗺(), this takes two required arguments first one being sources for example what your magnets are and what are there positions and power and the second one being manupulation where you can manipulate your magnets to rotate and move.
 
-𝗵𝗲𝗮𝘁𝗺𝗮𝗽_𝗶𝗺𝗮𝗴𝗲(), this can give you the heatmap of an image by just a single required argument that being image and then there are many optional arguments and here's a list of these argumaents data(boolean) meaning is this image an already read array or just a plain image, cmap(string) default cmap is coolwarm, vmin, vmax, center(float) default is 0.5, robust and figsize(list of two integers that determines size of the figure).
+𝗵𝗲𝗮𝘁𝗺𝗮𝗽_𝗶𝗺𝗮𝗴𝗲(), this can give you the heatmap of an image by just a single required argument that being image and then there are many optional arguments and here's a list of these argumaents data(boolean) meaning is this image an already read array or just a plain image, cmap(string) default cmap is coolwarm, vmin, vmax, center(float) default is 0.5, robust and figsize(list), title(string) of two integers that determines size of the figure).
 
-𝘄𝗮𝘀𝗵𝘁𝗿𝗲𝗱_𝗶𝗺𝗮𝗴𝗲(), basically a watershed effect with one required and three optional arguments, required one is image which is quite self explanatory... Optional areguments are data(boolean) meaning that is it an array or just a good ole image, output(boolean) it means that do you want it to be an output image or an output array, figsize(list) should have two indexes and it determines height and width of the displayed image and you can get what you want in utput by changing outvar parameter.
+𝘄𝗮𝘀𝗵𝘁𝗿𝗲𝗱_𝗶𝗺𝗮𝗴𝗲(), basically a watershed effect with one required and three optional arguments, required one is image which is quite self explanatory... Optional areguments are data(boolean) meaning that is it an array or just a good ole image, output(boolean) it means that do you want it to be an output image or an output array, figsize(list), title(string) should have two indexes and it determines height and width of the displayed image and you can get what you want in utput by changing outvar parameter.
 
-𝗯𝗿𝗶𝗴𝗵𝘁_𝘀𝗰𝗮𝗹𝗲(), this just makes a bright scale image and you can have other optional parameters such as outer_circle, it maes a dark circle on outside and is False by default, you can give this data or path of an image and yu need to specify it with 'data' parameter, with 'grayscale' you can just set if you want it to be gray or not, with 'dotted_lines' you can set there to be dotted lines if you want to, then there are usual figsiz, cmap and output.
+𝗯𝗿𝗶𝗴𝗵𝘁_𝘀𝗰𝗮𝗹𝗲(), this just makes a bright scale image and you can have other optional parameters such as outer_circle, it maes a dark circle on outside and is False by default, you can give this data or path of an image and yu need to specify it with 'data' parameter, with 'grayscale' you can just set if you want it to be gray or not, with 'dotted_lines' you can set there to be dotted lines if you want to, then there are usual figsiz, cmap, title(string) and output.
 
 𝗯𝗹𝗮𝗰𝗸_𝘀𝗶𝗺(), it can generate simulations for blackholes it takes two parameters both are required but these parameters are basic characteristics of blackhole and you need to give those in order for this function to work.
 
