@@ -207,7 +207,7 @@ def compact_segmentation_image(image, data=False, outvar='segments_watershed', t
         fig, axes = plt.subplots(1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
         ax = axes.ravel()
 
-        ax[0].imshow(mark_boundaries(image, eval(evluated)))
+        ax[0].imshow(mark_boundaries(image, eval(evaluated)))
         ax[0].set_title(title)
 
         for a in ax.ravel():
