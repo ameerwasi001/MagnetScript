@@ -185,21 +185,22 @@ def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_l
     else:
         return image
 
-#Compact segmentation of an image with MagnetScript (Parameters aren't yet configured well)
-def compact_segmentation_image(image, data=False, outvar='segments_watershed', title='Compact watershed', figsize=[6,4], output=True):
+#Compact segmentation of an image with MagnetScript
+def compact_segmentation_image(image, data=False, outvar='segments_watershed', title='Compact watershed',
+figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, compactness=10, kernal_siz=3, max_dist=6, ratio=0.5, markers=250):
     if not data:
         image = imread(image)
 
     image = img_as_float(image[::2, ::2])
 
-    segments_fz = felzenszwalb(image, scale=100, sigma=0.5, min_size=50)
-    segments_slic = slic(image, n_segments=250, compactness=10, sigma=1)
+    segments_fz = felzenszwalb(image, scale=scale, sigma=sigma, min_size=min_size)
+    segments_slic = slic(image, n_segments=n_segments, compactness=compactness, sigma=sigma)
     try:
-        segments_quick = quickshift(image, kernel_size=3, max_dist=6, ratio=0.5)
+        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio)
     except:
         pass
     gradient = sobel(rgb2gray(image))
-    segments_watershed = watershed(gradient, markers=250, compactness=0.001)
+    segments_watershed = watershed(gradient, markers=markers, compactness=compactness)
 
     evaluated = eval('outvar')
 
