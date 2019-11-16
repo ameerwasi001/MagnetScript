@@ -85,6 +85,20 @@ This shines in it's easy ways to do certain tasks but it doesn't come at too big
 
 𝗯𝗿𝗶𝗴𝗵𝘁_𝘀𝗰𝗮𝗹𝗲(), this just makes a bright scale image and you can have other optional parameters such as outer_circle, it maes a dark circle on outside and is False by default, you can give this data or path of an image and yu need to specify it with 'data' parameter, with 'grayscale' you can just set if you want it to be gray or not, with 'dotted_lines' you can set there to be dotted lines if you want to, then there are usual figsiz, cmap, title(string) and output.
 
+𝗰𝗼𝗺𝗽𝗮𝗰𝘁_𝘀𝗲𝗴𝗺𝗲𝗻𝘁𝗮𝘁𝗶𝗼𝗻_𝗶𝗺𝗮𝗴𝗲(), this segments the image using different methods avalible an argument outvar by defaut outvar='segments_watershed'. The only required argument is image but you can also provide data by using data argument by default data=False, title will be title of output figure by default title='Compact watershed', just figure size of this plot by default figsize=[6,4], then there are options for five different methods this function uses and following are there arguments.
+```
+scale=100, 
+sigma=0.5, 
+min_size=50, 
+n_segments=250, 
+compactness=10, 
+kernal_siz=3, 
+max_dist=6, 
+ratio=0.5, 
+markers=250
+```
+and then finally output, this argument by defult is output=True but changing it to false will output the actual array instead of just plotting out the figure.
+
 𝗯𝗹𝗮𝗰𝗸_𝘀𝗶𝗺(), it can generate simulations for blackholes it takes two parameters both are required but these parameters are basic characteristics of blackhole and you need to give those in order for this function to work.
 
 𝗶𝗺𝗮𝗴𝗲_𝘀𝗵𝗼𝘄(), this basically takes your image and shows it with required argument image and optional argumets cmap, interpolation, alpha, vmin, vmax, filter_radius, figsize, title.
