@@ -199,7 +199,7 @@ figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, c
     try:
         segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio)
     except:
-        pass
+        print("Quick segments not declared")
     gradient = sobel(rgb2gray(image))
     segments_watershed = watershed(gradient, markers=markers, compactness=compactness)
 
