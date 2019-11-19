@@ -163,6 +163,7 @@ def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None
 def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', output=True):
     if not data:
         image = imread(image)
+
     if grayscale:
         image[:10] = 0
         mask = image < 87
@@ -191,6 +192,10 @@ def compact_segmentation_image(image, data=False, outvar='segments_watershed', t
 figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, compactness=10, kernal_siz=3, max_dist=6, ratio=0.5, markers=250):
     if not data:
         image = imread(image)
+    else:
+        if len(image.shape) is 3:
+            image = rgb2grey(image)
+
 
     image = img_as_float(image[::2, ::2])
 
