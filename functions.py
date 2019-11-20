@@ -189,7 +189,7 @@ def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_l
 
 #Compact segmentation of an image with MagnetScript
 def compact_segmentation_image(image, data=False, outvar='segments_watershed', title='Compact watershed',
-figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, compactness=10, kernal_siz=3, max_dist=6, ratio=0.5, markers=250):
+figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, compactness=10, kernal_siz=3, max_dist=6, ratio=0.5, markers=250, supress=False):
     if not data:
         image = imread(image, as_gray=True)
     else:
@@ -204,7 +204,8 @@ figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, c
     try:
         segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio)
     except:
-        print("Quick segments not declared")
+        if not supress:
+            print("Quick segments not declared")
     gradient = sobel(rgb2gray(image))
     segments_watershed = watershed(gradient, markers=markers, compactness=compactness)
 
