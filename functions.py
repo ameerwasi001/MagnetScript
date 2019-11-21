@@ -271,9 +271,12 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 
 
 #Show image with MagnetScript
-def image_show(image, data=True, as_gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image'):
+def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image'):
     if not data:
-        image = imread(image, as_gray=as_gray)
+        image = imread(image, as_gray=gray)
+    else:
+        if ((len(image.shape) is 3) and gray):
+            image = rgb2grey(image)
     # display results
     fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
     ax = axes.ravel()
