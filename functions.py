@@ -140,7 +140,8 @@ def magnet_sim(sources, manipulation):
 
 
 #Heatmap for images using MagnetScript
-def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4]):
+def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
+fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], lablesize=[10, 10], which=['major', 'major']):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -151,12 +152,16 @@ def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None
     # display results
     sns.set(rc={'figure.figsize':(figsize[0], figsize[1])})
     if vmin == None and vmax == None:
-        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center,cbar=False, yticklabels=False, xticklabels=False)
+        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center,cbar=cbar)
     else:
-        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=False, yticklabels=False, xticklabels=False)
+        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=cbar, xticklabels=False, yticklabels=False)
 
     ax.imshow(image, cmap=plt.cm.get_cmap(cmap))
     ax.set_title(title)
+    ax.set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
+    ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
+    plt.tick_params(axis='x', which=which[0], labelsize=lablesize[0])
+    plt.tick_params(axis='y', which=which[1], labelsize=lablesize[1])
     plt.show()
 
 
@@ -271,7 +276,8 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 
 
 #Show image with MagnetScript
-def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image'):
+def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
+axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], lablesize=[10, 10], which=['major', 'major']):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -285,10 +291,13 @@ def image_show(image, data=True, gray=False, cmap='viridis', interpolation='near
     else:
         ax[0].imshow(image, plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filterrad, vmin=vmin, vmax=vmax)
     ax[0].set_title(title)
-
+    ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
+    ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
+    plt.tick_params(axis='x', which=which[0], labelsize=lablesize[0])
+    plt.tick_params(axis='y', which=which[1], labelsize=lablesize[1])
 
     for a in ax:
-        a.axis('off')
+        a.axis(axis)
 
     fig.tight_layout()
     plt.show()
