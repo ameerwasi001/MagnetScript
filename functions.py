@@ -141,7 +141,7 @@ def magnet_sim(sources, manipulation):
 
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
-fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], lablesize=[10, 10], which=['major', 'major']):
+fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off'):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -160,8 +160,9 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
     ax.set_title(title)
     ax.set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
     ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    plt.tick_params(axis='x', which=which[0], labelsize=lablesize[0])
-    plt.tick_params(axis='y', which=which[1], labelsize=lablesize[1])
+    plt.tick_params(axis='x', which=which[0], pad=pad[0])
+    plt.tick_params(axis='y', which=which[1], pad=pad[1])
+    plt.axis(axis)
     plt.show()
 
 
@@ -277,7 +278,7 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 
 #Show image with MagnetScript
 def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
-axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], lablesize=[10, 10], which=['major', 'major']):
+axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major']):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -293,8 +294,8 @@ axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom',
     ax[0].set_title(title)
     ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
     ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    plt.tick_params(axis='x', which=which[0], labelsize=lablesize[0])
-    plt.tick_params(axis='y', which=which[1], labelsize=lablesize[1])
+    plt.tick_params(axis='x', which=which[0], pad=pad[0])
+    plt.tick_params(axis='y', which=which[1], pad=pad[1])
 
     for a in ax:
         a.axis(axis)
