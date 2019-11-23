@@ -303,8 +303,6 @@ axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom',
 
     for a in ax:
         a.axis(axis)
-        a.set_yticks(a.get_yticks()[None:None:None])
-        a.set_yticks(a.get_yticks()[None:None:None])
 
     fig.tight_layout()
     plt.show()
