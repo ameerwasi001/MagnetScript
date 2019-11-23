@@ -151,6 +151,7 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
 
     # display results
     sns.set(rc={'figure.figsize':(figsize[0], figsize[1])})
+    sns.set_style("darkgrid")
     if vmin == None and vmax == None:
         ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center,cbar=cbar)
     else:
@@ -162,7 +163,10 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
     ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
     plt.tick_params(axis='x', which=which[0], pad=pad[0])
     plt.tick_params(axis='y', which=which[1], pad=pad[1])
-    plt.axis(axis)
+    if(axis != 'remove'):
+        plt.axis(axis)
+    ax.set_xticks(ax.get_xticks()[None:None:2])
+    ax.set_yticks(ax.get_yticks()[None:None:2])    
     plt.show()
 
 
@@ -299,6 +303,8 @@ axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom',
 
     for a in ax:
         a.axis(axis)
+        a.set_yticks(a.get_yticks()[None:None:2])
+        a.set_yticks(a.get_yticks()[None:None:2])
 
     fig.tight_layout()
     plt.show()
