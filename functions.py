@@ -282,7 +282,7 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 
 #Show image with MagnetScript
 def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
-axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axistick=None):
+axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major']):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -302,10 +302,9 @@ axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom',
     plt.tick_params(axis='y', which=which[1], pad=pad[1])
 
     for a in ax:
-        if axistick != None:
-            a.axis(axis)
-        a.set_yticks(a.get_yticks()[None:None:2])
-        a.set_yticks(a.get_yticks()[None:None:2])
+        a.axis(axis)
+        a.set_yticks(a.get_yticks()[None:None:None])
+        a.set_yticks(a.get_yticks()[None:None:None])
 
     fig.tight_layout()
     plt.show()
