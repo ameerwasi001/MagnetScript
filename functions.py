@@ -8,7 +8,8 @@ import matplotlib.pyplot as plt
 from matplotlib.colors import *
 import magpylib as magpy
 
-from scipy import ndimage as ndi
+import scipy as sc
+from scipy.ndimage import *
 from sympy import *
 
 import astropy.units as units
@@ -32,11 +33,12 @@ import seaborn as sns
 from skimage.morphology import watershed, disk
 from skimage import data
 from skimage.filters import *
-from skimage.util import img_as_ubyte
+from skimage.util import *
 from skimage.io import *
 from skimage.color import *
 from skimage.segmentation import *
 from skimage.transform import *
+from skimage.feature import *
 
 import inspect
 from importlib.machinery import SourceFileLoader
@@ -254,7 +256,7 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
     # where less than 10 for this image) --> markers
     # disk(5) is used here to get a more smooth image
     markers = rank.gradient(denoised, disk(5)) < 10
-    markers = ndi.label(markers)[0]
+    markers = label(markers)[0]
 
     # local gradient (disk(2) is used to keep edges thin)
     gradient = rank.gradient(denoised, disk(2))
