@@ -36,6 +36,7 @@ from skimage.util import img_as_ubyte
 from skimage.io import *
 from skimage.color import *
 from skimage.segmentation import *
+from skimage.transform import *
 
 import inspect
 from importlib.machinery import SourceFileLoader
