@@ -30,7 +30,7 @@ from galgebra.ga import *
 from galgebra.mv import *
 
 import seaborn as sns
-from skimage.morphology import watershed, disk
+from skimage.morphology import *
 from skimage import data
 from skimage.filters import *
 from skimage.util import *
@@ -144,7 +144,7 @@ def magnet_sim(sources, manipulation):
 
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
-fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off'):
+fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -154,11 +154,10 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
 
     # display results
     sns.set(rc={'figure.figsize':(figsize[0], figsize[1])})
-    sns.set_style("darkgrid")
     if vmin == None and vmax == None:
         ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center,cbar=cbar)
     else:
-        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=cbar, xticklabels=False, yticklabels=False)
+        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=cbar)
 
     ax.imshow(image, cmap=plt.cm.get_cmap(cmap))
     ax.set_title(title)
@@ -169,8 +168,9 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
     if(axis != 'remove'):
         plt.axis(axis)
     ax.set_xticks(ax.get_xticks()[None:None:2])
-    ax.set_yticks(ax.get_yticks()[None:None:2])    
-    plt.show()
+    ax.set_yticks(ax.get_yticks()[None:None:2])
+    if show:
+        plt.show()
 
 
 def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', output=True):
@@ -285,7 +285,7 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 
 #Show image with MagnetScript
 def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
-axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major']):
+axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], show=True):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -308,7 +308,8 @@ axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom',
         a.axis(axis)
 
     fig.tight_layout()
-    plt.show()
+    if show:
+        plt.show()
 
 
 #black hole simulation with ergosphere and horizon in MagnetScript
