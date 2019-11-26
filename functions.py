@@ -1,4 +1,3 @@
-from numpy import *
 import numpy as np
 
 from magpylib import source, Collection
@@ -127,8 +126,8 @@ def magnet_sim(sources, manipulation):
     fig1.set_size_inches(6, 6)
 
     #calculate B-field on a grid
-    axis = {'x': linspace(-10,10,30),
-            'y': linspace(-10,10,30)
+    axis = {'x': np.linspace(-10,10,30),
+            'y': np.linspace(-10,10,30)
            }
     Bfield = np.array([[magnets_collection.getB([x,0,y]) for x in axis['x']] for y in axis['y']])
 
