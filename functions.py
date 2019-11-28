@@ -143,7 +143,7 @@ def magnet_sim(sources, manipulation):
 
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
-fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True):
+fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True, xlabel='', ylabel=''):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -168,6 +168,8 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
         plt.axis(axis)
     ax.set_xticks(ax.get_xticks()[None:None:2])
     ax.set_yticks(ax.get_yticks()[None:None:2])
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
     if show:
         plt.show()
 
@@ -286,7 +288,8 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 
 #Show image with MagnetScript
 def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
-axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], show=True):
+axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], show=True,
+xlabel='', ylabel=''):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -307,6 +310,8 @@ axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom',
 
     for a in ax:
         a.axis(axis)
+        a.set_xlabel(xlabel)
+        a.set_ylabel(ylabel)
 
     fig.tight_layout()
     if show:
