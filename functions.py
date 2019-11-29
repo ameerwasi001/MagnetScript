@@ -143,13 +143,20 @@ def magnet_sim(sources, manipulation):
 
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
-fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True, xlabel='', ylabel=''):
+fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True, xlabel='', ylabel='',
+context='paper', style=None, usePlot='default'):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
     else:
         if len(image.shape) is 3:
             image = rgb2grey(image)
+
+    if style is not None:
+        sns.set_style(style)
+
+    #set context
+    sns.set_context(context)
 
     # display results
     sns.set(rc={'figure.figsize':(figsize[0], figsize[1])})
@@ -170,6 +177,9 @@ fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], 
     ax.set_yticks(ax.get_yticks()[None:None:2])
     ax.set_xlabel(xlabel)
     ax.set_ylabel(ylabel)
+
+    #set usePlot
+    plt.style.use(usePlot)
     if show:
         plt.show()
 
@@ -289,12 +299,19 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 #Show image with MagnetScript
 def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
 axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], show=True,
-xlabel='', ylabel=''):
+xlabel='', ylabel='', context='paper', style=None, usePlot='default'):
     if not data:
         image = imread(image, as_gray=gray)
     else:
         if ((len(image.shape) is 3) and gray):
             image = rgb2grey(image)
+    #set style
+    if style is not None:
+        sns.set_style(style)
+
+    #set context
+    sns.set_context(context)
+    
     # display results
     fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
     ax = axes.ravel()
@@ -314,6 +331,9 @@ xlabel='', ylabel=''):
         a.set_ylabel(ylabel)
 
     fig.tight_layout()
+    #set usePlot
+    plt.style.use(usePlot)
+        
     if show:
         plt.show()
 
