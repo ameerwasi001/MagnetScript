@@ -144,7 +144,7 @@ def magnet_sim(sources, manipulation):
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
 fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True, xlabel='', ylabel='',
-context='paper', style=None, usePlot='default'):
+context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -153,10 +153,10 @@ context='paper', style=None, usePlot='default'):
             image = rgb2grey(image)
 
     if style is not None:
-        sns.set_style(style)
+        sns.set_style(style, rc=rc[0])
 
     #set context
-    sns.set_context(context)
+    sns.set_context(context, font_scale=font_scale, rc=rc[0])
 
     # display results
     sns.set(rc={'figure.figsize':(figsize[0], figsize[1])})
