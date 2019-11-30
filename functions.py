@@ -299,7 +299,7 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
 #Show image with MagnetScript
 def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
 axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], show=True,
-xlabel='', ylabel='', context='paper', style=None, usePlot='default'):
+xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -307,10 +307,10 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default'):
             image = rgb2grey(image)
     #set style
     if style is not None:
-        sns.set_style(style)
+        sns.set_style(style, rc=rc[0])
 
     #set context
-    sns.set_context(context)
+    sns.set_context(context, font_scale=font_scale, rc=rc[1])
     
     # display results
     fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
