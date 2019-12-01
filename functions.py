@@ -254,7 +254,8 @@ supress=False, show=True):
 
         
 #Contrast an image with MagnetScript
-def watershed_image(image, data=False, output=True, interpolation="nearest", cmap='nipy_spectral', title="Local Gradient", outvar='gradient', figsize=[6,4]):
+def watershed_image(image, data=False, output=True, interpolation="nearest", cmap='nipy_spectral', title="Local Gradient", outvar='gradient', figsize=[6,4],
+disk_denonised = 2, disk_markers = 5, disk_gradient = 2):
 
     if not data:
         image = imread(image, as_gray=True)
@@ -263,16 +264,16 @@ def watershed_image(image, data=False, output=True, interpolation="nearest", cma
             image = rgb2grey(image)
 
     # denoise image
-    denoised = rank.median(image, disk(2))
+    denoised = rank.median(image, disk(disk_denonised))
 
     # find continuous region (low gradient -
     # where less than 10 for this image) --> markers
     # disk(5) is used here to get a more smooth image
-    markers = rank.gradient(denoised, disk(5)) < 10
+    markers = rank.gradient(denoised, disk(disk_markers)) < 10
     markers = label(markers)[0]
 
     # local gradient (disk(2) is used to keep edges thin)
-    gradient = rank.gradient(denoised, disk(2))
+    gradient = rank.gradient(denoised, disk(disk_gradient))
 
     # process the watershed
     labels = watershed(gradient, markers)
