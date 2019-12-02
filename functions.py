@@ -144,7 +144,7 @@ def magnet_sim(sources, manipulation):
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
 fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True, xlabel='', ylabel='',
-context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1):
+context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1, alpha=1, interpolation='nearest', filter_radius=4.0, output=True, disk_entropy=5):
     #Checking the image
     if not data:
         image = imread(image, as_gray=True)
@@ -152,37 +152,38 @@ context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1):
         if len(image.shape) is 3:
             image = rgb2grey(image)
 
-    if style is not None:
-        sns.set_style(style, rc=rc[0])
+    if output:
+        if style is not None:
+            sns.set_style(style, rc=rc[0])
 
-    #set context
-    sns.set_context(context, font_scale=font_scale, rc=rc[0])
+        #set context
+        sns.set_context(context, font_scale=font_scale, rc=rc[0])
 
-    # display results
-    sns.set(rc={'figure.figsize':(figsize[0], figsize[1])})
-    if vmin == None and vmax == None:
-        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center,cbar=cbar)
-    else:
-        ax = sns.heatmap(image, cmap=cmap, robust=robust, center=center, vmin=vmin, vmax=vmax, cbar=cbar)
+        # display results
+        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
+        ax = axes.ravel()
+        
+        if vmin==None and vmax==None:
+            ax[0].imshow(rank.entropy(image, disk(disk_entropy)), plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filter_radius)
+        else:
+            ax[0].imshow(rank.entropy(image, disk(disk_entropy)), plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filterrad, vmin=vmin, vmax=vmax)
 
-    ax.imshow(image, cmap=plt.cm.get_cmap(cmap))
-    ax.set_title(title)
-    ax.set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-    ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    plt.tick_params(axis='x', which=which[0], pad=pad[0])
-    plt.tick_params(axis='y', which=which[1], pad=pad[1])
-    if(axis != 'remove'):
+        ax[0].imshow(image, cmap=plt.cm.get_cmap(cmap))
+        ax[0].set_title(title)
+        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
+        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
+        plt.tick_params(axis='x', which=which[0], pad=pad[0])
+        plt.tick_params(axis='y', which=which[1], pad=pad[1])
         plt.axis(axis)
-    ax.set_xticks(ax.get_xticks()[None:None:2])
-    ax.set_yticks(ax.get_yticks()[None:None:2])
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
+        ax[0].set_xlabel(xlabel)
+        ax[0].set_ylabel(ylabel)
 
-    #set usePlot
-    plt.style.use(usePlot)
-    if show:
-        plt.show()
-
+        #set usePlot
+        plt.style.use(usePlot)
+        if show:
+            plt.show()
+    else:
+        return rank.entropy(image, disk(disk_entropy))
 
 def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', output=True):
     if not data:
