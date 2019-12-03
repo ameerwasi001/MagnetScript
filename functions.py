@@ -341,9 +341,9 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}
 
 
 #black hole simulation with ergosphere and horizon in MagnetScript
-def black_sim(M, a):
+def black_sim(M, a, title='', linspace=[0, np.pi, 720]):
     ergo, hori = list(), list()
-    thetas = np.linspace(0, np.pi, 720)
+    thetas = np.linspace(linspace[0], linspace[1], linspace[2])
     for t in thetas:
         ergo.append(kerr_utils.radius_ergosphere(M, a, t, "Spherical"))
         hori.append(kerr_utils.event_horizon(M, a, t, "Spherical"))
@@ -357,8 +357,10 @@ def black_sim(M, a):
     fig, ax = plt.subplots()
     ax.fill(Xh2, Yh2, 'b', Xe2, Ye2, 'r', alpha=0.3)
     ax.fill(-1*Xh2, Yh2, 'b', -1*Xe2, Ye2, 'r', alpha=0.3)
+    ax.set_title(title)
 
-    plt.show()
+    if show:
+        plt.show()
 
 
 #Frame-dragging effect in Kerr space-time
