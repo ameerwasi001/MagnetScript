@@ -341,7 +341,7 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}
 
 
 #black hole simulation with ergosphere and horizon in MagnetScript
-def black_sim(M, a, title='', linspace=[0, np.pi, 720]):
+def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel=''):
     ergo, hori = list(), list()
     thetas = np.linspace(linspace[0], linspace[1], linspace[2])
     for t in thetas:
@@ -358,6 +358,8 @@ def black_sim(M, a, title='', linspace=[0, np.pi, 720]):
     ax.fill(Xh2, Yh2, 'b', Xe2, Ye2, 'r', alpha=0.3)
     ax.fill(-1*Xh2, Yh2, 'b', -1*Xe2, Ye2, 'r', alpha=0.3)
     ax.set_title(title)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
 
     if show:
         plt.show()
