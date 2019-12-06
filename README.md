@@ -117,7 +117,7 @@ frame_drag(BL_obj, M)
 then there are stepsize and end lambda and defaults are
 ```
 end_lambda=((1 * units.year).to(units.s)).value/930
-stepsize=((0.02 * units.min).to(units.s)).value
+OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}
 ```
 and other basic defaults like dot of the given color(dot_color='black'), scatter value(scatter_val=[0,0]) and size, that being default as 2.0 are 
 ```
