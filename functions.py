@@ -367,11 +367,11 @@ def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', fi
 
 
 #Frame-dragging effect in Kerr space-time
-def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2,
-               end_lambda=((1 * units.year).to(units.s)).value/930, stepsize=((0.02 * units.min).to(units.s)).value):
+def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
+OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}):
     obj = Kerr.from_coords(BL_obj, M)
     ans = obj.calculate_trajectory(
-        end_lambda=end_lambda, OdeMethodKwargs={"stepsize": stepsize}, return_cartesian=True
+        end_lambda=end_lambda, OdeMethodKwargs = OdeMethodKwargs, return_cartesian=True
     )
     x, y = ans[1][:,1], ans[1][:,2]
 
