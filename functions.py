@@ -341,7 +341,8 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}
 
 
 #black hole simulation with ergosphere and horizon in MagnetScript
-def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', figsize=[6,4], alpha=0.3):
+def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', figsize=[6,4], alpha=0.3, ticklabels=[[], []], fontsize=[10,10], rotation=[0,0],
+va=['top', 'top'], ha=['right', 'right']):
     ergo, hori = list(), list()
     thetas = np.linspace(linspace[0], linspace[1], linspace[2])
     for t in thetas:
@@ -359,6 +360,9 @@ def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', fi
     ax[0].fill(Xh2, Yh2, 'b', Xe2, Ye2, 'r', alpha=alpha)
     ax[0].fill(-1*Xh2, Yh2, 'b', -1*Xe2, Ye2, 'r', alpha=alpha)
     ax[0].set_title(title)
+    if ticklabels != [[], []]:
+        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
+        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
 
