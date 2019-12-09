@@ -372,20 +372,24 @@ va=['top', 'top'], ha=['right', 'right']):
 
 #Frame-dragging effect in Kerr space-time
 def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
-OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize=[6,4]):
+OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize=[6,4], ticklabels=[[], []], fontsize=[10,10],
+rotation=[0,0], va=['top', 'top'], ha=['right', 'right']):
     obj = Kerr.from_coords(BL_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs = OdeMethodKwargs, return_cartesian=True
     )
     x, y = ans[1][:,1], ans[1][:,2]
 
-
-    fig = plt.figure(figsize=(figsize[0], figsize[1]))
-    plt.scatter(x,y, s=size)
-    plt.scatter(scatter_val[0],scatter_val[1], c='{}'.format(dot_color))
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
+    fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), squeeze=False)
+    ax = axes.ravel()
+    ax[0].scatter(x,y, s=size)
+    ax[0].scatter(scatter_val[0],scatter_val[1], c='{}'.format(dot_color))
+    ax[0].set_title(title)
+    if ticklabels != [[], []]:
+        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
+        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
+    ax[0].set_xlabel(xlabel)
+    ax[0].set_ylabel(ylabel)
     plt.show()
 
 #Calculating an orbit's eccentricity and apehelion and making a simulation
