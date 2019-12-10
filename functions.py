@@ -373,7 +373,7 @@ va=['top', 'top'], ha=['right', 'right']):
 #Frame-dragging effect in Kerr space-time
 def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
 OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize=[6,4], ticklabels=[[], []], fontsize=[10,10],
-rotation=[0,0], va=['top', 'top'], ha=['right', 'right']):
+rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on'):
     obj = Kerr.from_coords(BL_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs = OdeMethodKwargs, return_cartesian=True
@@ -390,6 +390,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right']):
         ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
+    ax[0].axis(axis)
     plt.show()
 
 #Calculating an orbit's eccentricity and apehelion and making a simulation
