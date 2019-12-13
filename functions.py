@@ -342,7 +342,7 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}
 
 #black hole simulation with ergosphere and horizon in MagnetScript
 def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', figsize=[6,4], alpha=0.3, ticklabels=[[], []], fontsize=[10,10], rotation=[0,0],
-va=['top', 'top'], ha=['right', 'right'], axis='on'):
+va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     ergo, hori = list(), list()
     thetas = np.linspace(linspace[0], linspace[1], linspace[2])
     for t in thetas:
@@ -374,7 +374,7 @@ va=['top', 'top'], ha=['right', 'right'], axis='on'):
 #Frame-dragging effect in Kerr space-time
 def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
 OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize=[6,4], ticklabels=[[], []], fontsize=[10,10],
-rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on'):
+rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     obj = Kerr.from_coords(BL_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs = OdeMethodKwargs, return_cartesian=True
@@ -392,7 +392,9 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on'):
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
     ax[0].axis(axis)
-    plt.show()
+
+    if show:
+        plt.show()
 
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, stepsize=((5 * units.min).to(units.s)).value, Object=None):
