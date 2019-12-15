@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 
 from magpylib import source, Collection
 from magpylib.source import *
@@ -397,10 +398,11 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
         plt.show()
 
 #Calculating an orbit's eccentricity and apehelion and making a simulation
-def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, stepsize=((5 * units.min).to(units.s)).value, Object=None, show=True):
+def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
+title="Orbit's eccentricity", show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
-        end_lambda=end_lambda, OdeMethodKwargs={"stepsize": stepsize}, return_cartesian=True
+        end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
     )
 
     ans[0].shape, ans[1].shape
@@ -421,9 +423,11 @@ def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value,
         Sun = Body(name="Sun", mass=M, parent=None)
         Object = Body(name="Earth", differential=sph_obj, parent=Sun)
         
-    geodesic = Geodesic(body=Object, time=0 * units.s, end_lambda=end_lambda, step_size=stepsize)
+    geodesic = Geodesic(body=Object, time=0 * units.s, end_lambda=end_lambda, step_size=OdeMethodKwargs["stepsize"])
 
     sgp = GeodesicPlotter()
     sgp.plot(geodesic)
+    plt.title(title)
+
     if show:
-        sgp.show()
+        plt.show()
