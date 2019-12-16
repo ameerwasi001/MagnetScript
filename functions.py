@@ -399,7 +399,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
 
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
-title="Orbit's eccentricity", show=True):
+title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
@@ -428,6 +428,10 @@ title="Orbit's eccentricity", show=True):
     sgp = GeodesicPlotter()
     sgp.plot(geodesic)
     plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    fig = plt.gcf()
+    fig.set_size_inches(figsize[0], figsize[1])
 
     if show:
         plt.show()
