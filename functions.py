@@ -393,6 +393,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
     ax[0].axis(axis)
+    fig.set_size_inches(figsize_inches[0], figsize_inches[1])
 
     if show:
         plt.show()
@@ -400,7 +401,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
 title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []], rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on',
-show=True):
+figsize_inches=[6.0,6.5], show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
@@ -430,14 +431,14 @@ show=True):
     sgp.plot(geodesic)
     fig = plt.gcf()
     ax = fig.get_axes()
-    plt.title(title)
-    plt.xlabel(xlabel)
-    plt.ylabel(ylabel)
-    fig.set_size_inches(figsize[0], figsize[1])
+    ax[0].set_title(title)
+    ax[0].set_xlabel(xlabel)
+    ax[0].set_ylabel(ylabel)
     if ticklabels != [[], []]:
         ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
         ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
     ax[0].axis(axis)
+    fig.set_size_inches(figsize_inches[0], figsize_inches[1])
 
     if show:
         plt.show()
