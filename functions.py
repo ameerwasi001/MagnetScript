@@ -374,7 +374,7 @@ va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
 
 #Frame-dragging effect in Kerr space-time
 def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
-OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize=[6,4], ticklabels=[[], []], fontsize=[10,10],
+OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize =[6,4], ticklabels=[[], []], fontsize=[10,10],
 rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     obj = Kerr.from_coords(BL_obj, M)
     ans = obj.calculate_trajectory(
@@ -393,7 +393,6 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
     ax[0].axis(axis)
-    fig.set_size_inches(figsize_inches[0], figsize_inches[1])
 
     if show:
         plt.show()
