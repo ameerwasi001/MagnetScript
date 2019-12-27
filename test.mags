@@ -2,9 +2,13 @@ surface_obj = SchwarzschildEmbedding(5.927e23 * units.kg)
 surface_obj.plot_hypersurface(plot_type='surface')
 surface_obj.show()
 
-#Simple sample Code for "iterate" and "function"
-function letters_of_word(word):
-  iterate letter inside word:
-    echo(letter)
+echo("------------------------------")
 
-letters_of_word("hello")
+vals=['Wasi', 'Wajiha', 'Hibba', 'Ameer']
+x=len(vals)-1
+
+when(x>=0)>: echo(vals[x]); x-=1
+
+echo("______________________________")
+
+iterate x inside vals>: echo(x)
