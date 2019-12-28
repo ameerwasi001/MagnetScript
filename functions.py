@@ -400,7 +400,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
 title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []], rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on',
-figsize_inches=[6.0,6.5], show=True):
+figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
@@ -438,6 +438,8 @@ figsize_inches=[6.0,6.5], show=True):
         ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
     ax[0].axis(axis)
     fig.set_size_inches(figsize_inches[0], figsize_inches[1])
+    plt.tick_params(axis='x', which=which[0], pad=pad[0])
+    plt.tick_params(axis='y', which=which[1], pad=pad[1])
 
     if show:
         plt.show()
