@@ -342,8 +342,8 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}
 
 
 #black hole simulation with ergosphere and horizon in MagnetScript
-def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', figsize=[6,4], alpha=0.3, ticklabels=[[], []], fontsize=[10,10], rotation=[0,0],
-va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
+def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', figsize=[7,5], alpha=0.3, ticklabels=[[], []], fontsize=[10,10], rotation=[0,0],
+va=['top', 'top'], ha=['right', 'right'], axis='on', which=['major', 'major'], pad=[10,10], show=True):
     ergo, hori = list(), list()
     thetas = np.linspace(linspace[0], linspace[1], linspace[2])
     for t in thetas:
@@ -367,6 +367,8 @@ va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
     ax[0].axis(axis)
+    plt.tick_params(axis='x', which=which[0], pad=pad[0])
+    plt.tick_params(axis='y', which=which[1], pad=pad[1])
 
     if show:
         plt.show()
@@ -374,8 +376,8 @@ va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
 
 #Frame-dragging effect in Kerr space-time
 def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
-OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize =[6,4], ticklabels=[[], []], fontsize=[10,10],
-rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
+OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize = [7,5], ticklabels=[[], []], fontsize=[10,10],
+rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', which=['major', 'major'], pad=[10,10], show=True):
     obj = Kerr.from_coords(BL_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs = OdeMethodKwargs, return_cartesian=True
@@ -393,6 +395,8 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', show=True):
     ax[0].set_xlabel(xlabel)
     ax[0].set_ylabel(ylabel)
     ax[0].axis(axis)
+    plt.tick_params(axis='x', which=which[0], pad=pad[0])
+    plt.tick_params(axis='y', which=which[1], pad=pad[1])
 
     if show:
         plt.show()
