@@ -113,7 +113,7 @@ def mgs_require(module_name):
     return module
 
 #magnetic simulation with MagnetScript
-def magnet_sim(sources, manipulation):
+def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}):
     frame = inspect.currentframe().f_back
     
     #manipulation of Magnets
@@ -127,9 +127,7 @@ def magnet_sim(sources, manipulation):
     fig1.set_size_inches(6, 6)
 
     #calculate B-field on a grid
-    axis = {'x': np.linspace(-10,10,30),
-            'y': np.linspace(-10,10,30)
-           }
+    axis = axis
     Bfield = np.array([[magnets_collection.getB([x,0,y]) for x in axis['x']] for y in axis['y']])
 
     #display field in xz-plane using matplotlib
