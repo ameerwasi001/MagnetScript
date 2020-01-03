@@ -113,7 +113,7 @@ def mgs_require(module_name):
     return module
 
 #magnetic simulation with MagnetScript
-def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2):
+def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2,title="Magnetic Simulation"):
     frame = inspect.currentframe().f_back
     
     #manipulation of Magnets
@@ -135,6 +135,7 @@ def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np
     X,Z = np.meshgrid(axis['x'],axis['y'])
     U,V = Bfield[:,:,0], Bfield[:,:,2]
     ax.streamplot(X, Z, U, V, color=np.log(U**2+V**2), density=density)
+    ax.set_title(title)
 
     #show plots
     plt.show()
