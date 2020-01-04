@@ -113,7 +113,8 @@ def mgs_require(module_name):
     return module
 
 #magnetic simulation with MagnetScript
-def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2,title="Magnetic Simulation"):
+def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2, title="Magnetic Simulation", figsize1=[6,6],
+figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2)):
     frame = inspect.currentframe().f_back
     
     #manipulation of Magnets
@@ -124,17 +125,17 @@ def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np
 
     #display system geometry
     fig1 = magnets_collection.displaySystem(suppress=True)
-    fig1.set_size_inches(6, 6)
+    fig1.set_size_inches(figsize1[0], figsize1[1])
 
     #calculate B-field on a grid
-    axis = axis
     Bfield = np.array([[magnets_collection.getB([x,0,y]) for x in axis['x']] for y in axis['y']])
 
     #display field in xz-plane using matplotlib
     fig2, ax = plt.subplots()
     X,Z = np.meshgrid(axis['x'],axis['y'])
     U,V = Bfield[:,:,0], Bfield[:,:,2]
-    ax.streamplot(X, Z, U, V, color=np.log(U**2+V**2), density=density)
+    fig2.set_size_inches(figsize2[0], figsize2[1])
+    ax.streamplot(X, Z, U, V, color=set_color(U,V), density=density)
     ax.set_title(title)
 
     #show plots
