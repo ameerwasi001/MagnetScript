@@ -114,7 +114,9 @@ def mgs_require(module_name):
 
 #magnetic simulation with MagnetScript
 def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2, title="Magnetic Simulation", figsize1=[6,6],
-figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2)):
+figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2), supress=True, ticklabels = [[], []], rotation=[0,0], va=['top', 'top'], ha=['right', 'right'],
+pad=[10, 10], fontsize=[10,10], show=True):
+
     frame = inspect.currentframe().f_back
     
     #manipulation of Magnets
@@ -124,7 +126,7 @@ figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2)):
     magnets_collection = magpy.Collection(*sources)
 
     #display system geometry
-    fig1 = magnets_collection.displaySystem(suppress=True)
+    fig1 = magnets_collection.displaySystem(suppress=supress)
     fig1.set_size_inches(figsize1[0], figsize1[1])
 
     #calculate B-field on a grid
@@ -137,10 +139,13 @@ figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2)):
     fig2.set_size_inches(figsize2[0], figsize2[1])
     ax.streamplot(X, Z, U, V, color=set_color(U,V), density=density)
     ax.set_title(title)
+    if ticklabels != [[], []]:
+       ax.set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
+       ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
 
     #show plots
-    plt.show()
-
+    if show:
+        plt.show()
 
 #Heatmap for images using MagnetScript
 def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
