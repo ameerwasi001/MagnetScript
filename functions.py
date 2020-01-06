@@ -115,7 +115,7 @@ def mgs_require(module_name):
 #magnetic simulation with MagnetScript
 def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2, title="Magnetic Simulation", figsize1=[6,6],
 figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2), supress=True, ticklabels = [[], []], rotation=[0,0], va=['top', 'top'], ha=['right', 'right'],
-pad=[10, 10], fontsize=[10,10], show=True):
+pad=[10, 10], fontsize=[10,10], axis_show='on', xlabel='', ylabel='', show=True):
 
     frame = inspect.currentframe().f_back
     
@@ -142,6 +142,9 @@ pad=[10, 10], fontsize=[10,10], show=True):
     if ticklabels != [[], []]:
        ax.set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
        ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
+    plt.axis(axis_show)
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
 
     #show plots
     if show:
