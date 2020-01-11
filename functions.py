@@ -196,7 +196,8 @@ context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1, alpha
     else:
         return rank.entropy(image, disk(disk_entropy))
 
-def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', contrast = 255, output=True):
+def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', contrast = 255,
+inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)), output=True):
     if not data:
         image = imread(image)
 
@@ -205,8 +206,8 @@ def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_l
         mask = image < 87
         image[mask] = contrast
     if dotted_lines:
-        inds_x = np.arange(len(image))
-        inds_y = (4 * inds_x) % len(image)
+        inds_x = inds_x(image)
+        inds_y = inds_y(inds_x, image)
         image[inds_x, inds_y] = 0
 
     if outer_circle:
