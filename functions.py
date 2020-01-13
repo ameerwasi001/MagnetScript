@@ -197,7 +197,8 @@ context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1, alpha
         return rank.entropy(image, disk(disk_entropy))
 
 def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', contrast = 255,
-inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)), output=True):
+inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)),
+outer_disk_mask = lambda X, Y, l_x, l_y: (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2, output=True):
     if not data:
         image = imread(image)
 
@@ -213,7 +214,7 @@ inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 
     if outer_circle:
         l_x, l_y = image.shape[0], image.shape[1]
         X, Y = np.ogrid[:l_x, :l_y]
-        outer_disk_mask = (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2
+        outer_disk_mask = outer_disk_mask(X, Y, l_x, l_y)
         image[outer_disk_mask] = 0
 
     if output:
