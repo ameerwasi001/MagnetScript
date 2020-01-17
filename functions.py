@@ -238,23 +238,21 @@ supress=False, show=True):
 
     image = img_as_float(image[::2, ::2])
 
-    segments_fz = felzenszwalb(image, scale=scale, sigma=sigma, min_size=min_size)
-    segments_slic = slic(image, n_segments=n_segments, compactness=compactness, sigma=sigma)
+    segments_fz = felzenszwalb(image, scale=scale, sigma=sigma, min_size=min_size) if outvar == 'segments_fz' else None
+    segments_slic = slic(image, n_segments=n_segments, compactness=compactness, sigma=sigma) if outvar == 'segments_slic' else None
     try:
-        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio)
+        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio) if outvar == 'segments_quick' else None
     except:
         if not supress:
             print("Quick segments not declared")
     gradient = sobel(rgb2gray(image))
-    segments_watershed = watershed(gradient, markers=markers, compactness=compactness)
-
-    evaluated = eval('outvar')
+    segments_watershed = watershed(gradient, markers=markers, compactness=compactness) if outvar == 'segments_watershed' else None
 
     if output:
         fig, axes = plt.subplots(1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
         ax = axes.ravel()
 
-        ax[0].imshow(mark_boundaries(image, eval(evaluated)))
+        ax[0].imshow(mark_boundaries(image, eval(eval('outvar'))))
         ax[0].set_title(title)
 
         for a in ax.ravel():
@@ -264,7 +262,7 @@ supress=False, show=True):
         if show:
             plt.show()
     else:
-        return eval(evaluated)
+        return eval(eval('outvar'))
 
         
 #Contrast an image with MagnetScript
