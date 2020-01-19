@@ -198,18 +198,19 @@ context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1, alpha
 
 def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', contrast = 255,
 inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)), outer_mask = 0,
-outer_disk_mask = lambda X, Y, l_x, l_y: (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2, output=True):
+outer_disk_mask = lambda X, Y, l_x, l_y: (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2, dotter=0, cutter=0, output=True):
     if not data:
         image = imread(image)
 
     if grayscale:
-        image[:10] = 0
+        image[:10] = cutter
         mask = image < 87
         image[mask] = contrast
+
     if dotted_lines:
         inds_x = inds_x(image)
         inds_y = inds_y(inds_x, image)
-        image[inds_x, inds_y] = 0
+        image[inds_x, inds_y] = dotter
 
     if outer_circle:
         l_x, l_y = image.shape[0], image.shape[1]
