@@ -414,8 +414,8 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', which=['maj
 
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
-title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []], rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on',
-figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
+eccernity_calc = lambda x,y: x / (np.sqrt(x ** 2 + y ** 2)), title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []],
+rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
@@ -432,7 +432,7 @@ figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
     xlist, ylist = ans[1][:, 1], ans[1][:, 2]
     i = np.argmax(ylist)
     x, y = xlist[i], ylist[i]
-    eccentricity = x / (np.sqrt(x ** 2 + y ** 2))
+    eccentricity = eccernity_calc(x, y)
     eccentricity
 
     if Object == None:
