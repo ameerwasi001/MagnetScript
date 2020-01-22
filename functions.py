@@ -1,460 +1,135 @@
-import numpy as np
-import pandas as pd
+import re
+from selenium import webdriver
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.keys import Keys
+import time
 
-from magpylib import source, Collection
-from magpylib.source import *
-import magpylib.source.magnet as magnet
-import matplotlib.pyplot as plt
-from matplotlib.colors import *
-import magpylib as magpy
+driver = None
+elements = {}
+variables = {}
 
-import scipy as sc
-from scipy.ndimage import *
-from sympy import *
+def findElement(element, index):
+    return elements[element] if index is None else elements[element][int(index)]
 
-import astropy.units as units
-from astropy import constants
+def listOrNot(index):
+    global elements
+    if isinstance(elements[index], list) and len(elements[index]) == 1:
+        elements[index] = elements[index][0]
+    elif isinstance(elements[index], list) and len(elements[index]) == 0:
+        raise KeyError ("No element with matching attributes found")
 
-from einsteinpy.plotting import *
-from einsteinpy.coordinates import *
-from einsteinpy.bodies import *
-from einsteinpy.geodesic import *
-from einsteinpy.hypersurface import *
-from einsteinpy.symbolic import *
-from einsteinpy.metric import *
-from einsteinpy.utils import *
-from skimage.util import *
+def str2bool(v):
+  return v.lower() in ("yes", "true", "t", "1")
 
-from galgebra.printer import *
-from galgebra.ga import *
-from galgebra.mv import *
+def sleep(wait):
+    time.sleep(int(wait))
 
-import seaborn as sns
-from skimage.morphology import *
-from skimage import data
-from skimage.filters import *
-from skimage.util import *
-from skimage.io import *
-from skimage.color import *
-from skimage.segmentation import *
-from skimage.transform import *
-from skimage.feature import *
-
-import inspect
-from importlib.machinery import SourceFileLoader
-import tokens
-import types
-import sys
-
-#for loop in MagnetScript
-def forloop(num_of_times, code):
-    frame = inspect.currentframe().f_back
-    for x in range(0, num_of_times, 1):
-        exec(str(code), frame.f_globals, frame.f_locals)
-
-
-#'Print' or in this case 'echo' anything in MagnetScript
-def echo(*values):
-    print(*values)
-
-
-def processed_input(str_to_show):
-    content = input(str_to_show)
-    content = tokens.tokenize(content)
-    return content
-
-#while loop in MagnetScript
-def conloop(condition, code):
-    frame = inspect.currentframe().f_back
-    while eval(str(condition), frame.f_globals, frame.f_locals):
-        exec(str(code), frame.f_globals, frame.f_locals)
-
-
-
-#do-while loop in MagnetScript
-def do_conloop(code, condition):
-    frame = inspect.currentframe().f_back
-    while True:
-        exec(str(code), frame.f_globals, frame.f_locals)
-        if not eval(str(condition), frame.f_globals, frame.f_locals):
-           break
-
-#Reverse a string
-def str_slice(string, slicevalues=[None,None,-1]):
-    if(len(slicevalues) > 3):
-        raise ValueError(f'There can only be three slice values in slice values but {len(slicevalues)} are given in {slicevalues}')
-    else:
-        return string[slicevalues[0]:slicevalues[1]:slicevalues[2]]
-
-def relpath(path):
-    path = os.path.dirname(os.path.realpath(os.path.abspath(path)))
-    path = path.replace('\\', '/')
-    return path
-
-#importing a python file in MagnetScript
-def require(file, name="imported"):
-    loader = SourceFileLoader(name,file)
-    loaded = loader.load_module()
-    return loaded
-
-#importing a MagnetScript file in MagnetScript
-def mgs_require(module_name):
-    file = open(module_name, "r+")
-    lines = file.readlines()
-    linenum = 0
-    lines.insert(0, "from functions import * \n")
-    while(linenum<len(lines)):
-        lines[linenum] = tokens.tokenize(lines[linenum], directory=relpath(module_name))
-        linenum+=1
-    source = '\n'.join(lines)
-    module = types.ModuleType(module_name)
-    exec(source, module.__dict__)
-    sys.modules[module_name] = module
-    return module
-
-#magnetic simulation with MagnetScript
-def magnet_sim(sources, manipulation, axis={'x': np.linspace(-10,10,30), 'y': np.linspace(-10,10,30)}, density=2, title="Magnetic Simulation", figsize1=[6,6],
-figsize2=[6,5], set_color=lambda U,V: np.log(U**2+V**2), supress=True, ticklabels = [[], []], rotation=[0,0], va=['top', 'top'], ha=['right', 'right'],
-fontsize=[10,10], axis_show='on', xlabel='', ylabel='', pad=[10, 10], which=['major', 'major'], show=True):
-
-    frame = inspect.currentframe().f_back
-    
-    #manipulation of Magnets
-    exec(str(manipulation), frame.f_globals, frame.f_locals)
-
-    #create collection
-    magnets_collection = magpy.Collection(*sources)
-
-    #display system geometry
-    fig1 = magnets_collection.displaySystem(suppress=supress)
-    fig1.set_size_inches(figsize1[0], figsize1[1])
-
-    #calculate B-field on a grid
-    Bfield = np.array([[magnets_collection.getB([x,0,y]) for x in axis['x']] for y in axis['y']])
-
-    #display field in xz-plane using matplotlib
-    fig2, ax = plt.subplots()
-    X,Z = np.meshgrid(axis['x'],axis['y'])
-    U,V = Bfield[:,:,0], Bfield[:,:,2]
-    fig2.set_size_inches(figsize2[0], figsize2[1])
-    ax.streamplot(X, Z, U, V, color=set_color(U,V), density=density)
-    ax.set_title(title)
-    if ticklabels != [[], []]:
-       ax.set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-       ax.set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    plt.tick_params(axis='x', which=which[0], pad=pad[0])
-    plt.tick_params(axis='y', which=which[1], pad=pad[1])
-    plt.axis(axis_show)
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel(ylabel)
-
-    #show plots
-    if show:
-        plt.show()
-
-#Heatmap for images using MagnetScript
-def heatmap_image(image, data=False, cmap='coolwarm', title='Heatmap', vmin=None, vmax=None, center=0.5, robust=True, figsize=[6,4], cbar=False, ticklabels=[[], []],
-fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], axis='off', show=True, xlabel='', ylabel='',
-context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1, alpha=1, interpolation='nearest', filter_radius=4.0, output=True, disk_entropy=5):
-    #Checking the image
-    if not data:
-        image = imread(image, as_gray=True)
-    else:
-        if len(image.shape) is 3:
-            image = rgb2grey(image)
-
-    if output:
-        if style is not None:
-            sns.set_style(style, rc=rc[0])
-
-        #set context
-        sns.set_context(context, font_scale=font_scale, rc=rc[0])
-
-        # display results
-        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
-        ax = axes.ravel()
-        
-        if vmin==None and vmax==None:
-            ax[0].imshow(rank.entropy(image, disk(disk_entropy)), plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filter_radius)
+def SET(typeVar, **kwargs):
+    global variables
+    for k, v in kwargs.items():
+        if typeVar == 'float':
+            variables[k] = float(v)
+        elif typeVar == 'str':
+            variables[k] = str(v)
+        elif typeVar == 'int':
+            variables[k] = int(v)
         else:
-            ax[0].imshow(rank.entropy(image, disk(disk_entropy)), plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filterrad, vmin=vmin, vmax=vmax)
+            raise AttributeError ("Given type is unsupported")
+    print(variables)
 
-        ax[0].imshow(image, cmap=plt.cm.get_cmap(cmap))
-        ax[0].set_title(title)
-        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-        plt.tick_params(axis='x', which=which[0], pad=pad[0])
-        plt.tick_params(axis='y', which=which[1], pad=pad[1])
-        plt.axis(axis)
-        ax[0].set_xlabel(xlabel)
-        ax[0].set_ylabel(ylabel)
+def GET(variable):
+    return variables[variable]
 
-        #set usePlot
-        plt.style.use(usePlot)
-        if show:
-            plt.show()
+def EVALUATE(evaluation):
+    print(evaluation)
+    #evaluation = evaluation.replace(' ', '')
+    #evaluation = evaluation.replace('get>', 'variables[')
+    arreval = re.split('(\(|\)|\+|\-|\*|\/)', evaluation)
+    for i, a in enumerate(arreval):
+        print(arreval[i])
+        arreval[i] = str(arreval[i]).replace('get>', "variables['")
+        if arreval[i].startswith('variables'):
+            arreval[i] = str(arreval[i])+"']"
+            arreval[i] = eval(arreval[i], globals(), locals())
+        for i, a in enumerate(arreval):
+            try:
+                arreval[i] = int(arreval[i])
+            except:
+                arreval[i] = arreval[i]
+    return eval(''.join([str(a) for a in arreval]))
+
+def start(browser, path='/'):
+    global driver
+    if browser.upper() == 'CHROME':
+        driver = webdriver.Chrome(path)
+    elif browser.upper() == 'FIREFOX':
+        driver = webdriver.Firefox(path)
+    elif browser.upper() == 'EDGE':
+        driver = webdriver.Edge(path)
+    elif browser.upper() == 'SAFARI':
+        driver = webdriver.Safari(path)
+
+def get_element_by_name(name, index):
+    global elements
+    elements[index] = driver.find_elements_by_name(name)
+    listOrNot(index)
+
+def get_element_by_class(class_name, index):
+    global elements
+    elements[index] = driver.find_elements_by_class_name(class_name)
+    listOrNot(index)
+
+def action_series(*text_args, enter="True"):
+    actions = ActionChains(driver)
+    actions.send_keys(*text_args)
+    if str2bool(enter):
+        actions.send_keys(Keys.ENTER)
+    actions.perform()
+
+def get_element_by_id(elem_id, index):
+    global elements
+    elements[index] = driver.find_elements_by_id(elem_id)
+    listOrNot(index)
+
+def get_element_by_xpath(xpath, index):
+    global elements
+    elements[index] = driver.find_elements_by_xpath(xpath)
+    listOrNot(index)
+
+def get_element_by_tag(tag, index):
+    global elements
+    elements[index] = driver.find_elements_by_tag_name(tag)
+    listOrNot(index)
+
+def get_element_by_link_text(mode, text, index):
+    global elements
+    if mode.lower() == "absolute":
+        elements[index] = driver.find_elements_by_link_text(text)
+    elif mode.lower() == "partial":
+        elements[index] = driver.find_elements_by_partial_link_text(text)
     else:
-        return rank.entropy(image, disk(disk_entropy))
+        raise TypeError (f"undefined type {mode}")
+    listOrNot(index)
 
-def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', contrast = 255,
-inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)), outer_mask = 0,
-outer_disk_mask = lambda X, Y, l_x, l_y: (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2, dotter=0, cutter=0, output=True):
-    if not data:
-        image = imread(image)
+def clear(element, index):
+    findElement(element, index).clear()
 
-    if grayscale:
-        image[:10] = cutter
-        mask = image < 87
-        image[mask] = contrast
+def write(element, words, index=None, clear="True", enter="True"):
+    if str2bool(clear):
+        findElement(element, index).clear()
+    findElement(element, index).send_keys(words)
+    if str2bool(enter):
+        findElement(element, index).send_keys(Keys.RETURN)
 
-    if dotted_lines:
-        inds_x = inds_x(image)
-        inds_y = inds_y(inds_x, image)
-        image[inds_x, inds_y] = dotter
+def click(element, index=None):
+    findElement(element, index).click()
 
-    if outer_circle:
-        l_x, l_y = image.shape[0], image.shape[1]
-        X, Y = np.ogrid[:l_x, :l_y]
-        outer_disk_mask = outer_disk_mask(X, Y, l_x, l_y)
-        image[outer_disk_mask] = outer_mask
+def visit(*args):
+    driver.get(*args)
 
-    if output:
-        plt.figure(figsize=(figsize[0], figsize[1]))
-        plt.imshow(image, cmap=cmap)
-        plt.axis('off')
-        plt.show()
-    else:
-        return image
+def close():
+    driver.close()
 
-#Compact segmentation of an image with MagnetScript
-def compact_segmentation_image(image, data=False, outvar='segments_watershed', title='Compact watershed',
-figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, compactness=10, kernal_siz=3, max_dist=6, ratio=0.5, markers=250, gray=True,
-supress=False, show=True):
-    if not data:
-        image = imread(image, as_gray=gray)
-    else:
-        if ((len(image.shape) is 3) and gray):
-            image = rgb2grey(image)
-
-
-    image = img_as_float(image[::2, ::2])
-
-    segments_fz = felzenszwalb(image, scale=scale, sigma=sigma, min_size=min_size) if outvar == 'segments_fz' else None
-    segments_slic = slic(image, n_segments=n_segments, compactness=compactness, sigma=sigma) if outvar == 'segments_slic' else None
-    try:
-        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio) if outvar == 'segments_quick' else None
-    except:
-        if not supress:
-            print("Quick segments not declared")
-    gradient = sobel(rgb2gray(image))
-    segments_watershed = watershed(gradient, markers=markers, compactness=compactness) if outvar == 'segments_watershed' else None
-
-    if output:
-        fig, axes = plt.subplots(1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
-        ax = axes.ravel()
-
-        ax[0].imshow(mark_boundaries(image, eval(eval('outvar'))))
-        ax[0].set_title(title)
-
-        for a in ax.ravel():
-            a.set_axis_off()
-
-        plt.tight_layout()
-        if show:
-            plt.show()
-    else:
-        return eval(eval('outvar'))
-
-        
-#Contrast an image with MagnetScript
-def watershed_image(image, data=False, output=True, interpolation="nearest", cmap='nipy_spectral', title="Local Gradient", outvar='gradient', figsize=[6,4],
-disk_denonised = 2, disk_markers = 5, disk_gradient = 2):
-
-    if not data:
-        image = imread(image, as_gray=True)
-    else:
-        if len(image.shape) is 3:
-            image = rgb2grey(image)
-
-    # denoise image
-    denoised = rank.median(image, disk(disk_denonised))
-
-    # find continuous region (low gradient -
-    # where less than 10 for this image) --> markers
-    # disk(5) is used here to get a more smooth image
-    markers = rank.gradient(denoised, disk(disk_markers)) < 10
-    markers = label(markers)[0]
-
-    # local gradient (disk(2) is used to keep edges thin)
-    gradient = rank.gradient(denoised, disk(disk_gradient))
-
-    # process the watershed
-    labels = watershed(gradient, markers)
-
-    evluated = eval('outvar')
-
-    if output:
-        # display results
-        fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
-        ax = axes.ravel()
-        ax[0].imshow(eval(evluated), plt.cm.get_cmap(cmap), interpolation=interpolation)
-        ax[0].set_title(title)
-
-
-        for a in ax:
-            a.axis('off')
-
-        fig.tight_layout()
-        plt.show()
-    else:
-        return eval(evluated)
-
-
-#Show image with MagnetScript
-def image_show(image, data=True, gray=False, cmap='viridis', interpolation='nearest', alpha=1, vmin=None, vmax=None, filter_radius=4.0, figsize=[6,4], title='Image',
-axis='off', ticklabels=[[], []], fontsize=[10,10], rotation=[0,0], va=['bottom', 'bottom'], ha=['left', 'left'], pad=[10, 10], which=['major', 'major'], show=True,
-xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1):
-    if not data:
-        image = imread(image, as_gray=gray)
-    else:
-        if ((len(image.shape) is 3) and gray):
-            image = rgb2grey(image)
-    #set style
-    if style is not None:
-        sns.set_style(style, rc=rc[0])
-
-    #set context
-    sns.set_context(context, font_scale=font_scale, rc=rc[1])
-    
-    # display results
-    fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
-    ax = axes.ravel()
-    if vmin==None and vmax==None:
-        ax[0].imshow(image, plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filter_radius)
-    else:
-        ax[0].imshow(image, plt.cm.get_cmap(cmap), alpha=alpha, interpolation=interpolation, filterrad=filterrad, vmin=vmin, vmax=vmax)
-    ax[0].set_title(title)
-    ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-    ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    plt.tick_params(axis='x', which=which[0], pad=pad[0])
-    plt.tick_params(axis='y', which=which[1], pad=pad[1])
-
-    for a in ax:
-        a.axis(axis)
-        a.set_xlabel(xlabel)
-        a.set_ylabel(ylabel)
-
-    fig.tight_layout()
-    #set usePlot
-    plt.style.use(usePlot)
-        
-    if show:
-        plt.show()
-
-
-#black hole simulation with ergosphere and horizon in MagnetScript
-def black_sim(M, a, title='', linspace=[0, np.pi, 720], xlabel='', ylabel='', figsize=[7,5], alpha=0.3, ticklabels=[[], []], fontsize=[10,10], rotation=[0,0],
-va=['top', 'top'], ha=['right', 'right'], axis='on', which=['major', 'major'], pad=[10,10], show=True):
-    ergo, hori = list(), list()
-    thetas = np.linspace(linspace[0], linspace[1], linspace[2])
-    for t in thetas:
-        ergo.append(kerr_utils.radius_ergosphere(M, a, t, "Spherical"))
-        hori.append(kerr_utils.event_horizon(M, a, t, "Spherical"))
-    ergo, hori = np.array(ergo), np.array(hori)
-
-
-    Xe2, Ye2 = ergo[:,0] * np.sin(ergo[:,1]), ergo[:,0] * np.cos(ergo[:,1])
-    Xh2, Yh2 = hori[:,0] * np.sin(hori[:,1]), hori[:,0] * np.cos(hori[:,1])
-
-    # for displaying ordinary blackhole
-    fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), squeeze=False)
-    ax = axes.ravel()
-    ax[0].fill(Xh2, Yh2, 'b', Xe2, Ye2, 'r', alpha=alpha)
-    ax[0].fill(-1*Xh2, Yh2, 'b', -1*Xe2, Ye2, 'r', alpha=alpha)
-    ax[0].set_title(title)
-    if ticklabels != [[], []]:
-        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    ax[0].set_xlabel(xlabel)
-    ax[0].set_ylabel(ylabel)
-    ax[0].axis(axis)
-    plt.tick_params(axis='x', which=which[0], pad=pad[0])
-    plt.tick_params(axis='y', which=which[1], pad=pad[1])
-
-    if show:
-        plt.show()
-
-
-#Frame-dragging effect in Kerr space-time
-def frame_drag(BL_obj, M, scatter_val=[0,0], dot_color='black', size=0.2, end_lambda=((1 * units.year).to(units.s)).value/930,
-OdeMethodKwargs = {"stepsize": ((0.02 * units.min).to(units.s)).value}, title='', xlabel='', ylabel='', figsize = [7,5], ticklabels=[[], []], fontsize=[10,10],
-rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', which=['major', 'major'], pad=[10,10], show=True):
-    obj = Kerr.from_coords(BL_obj, M)
-    ans = obj.calculate_trajectory(
-        end_lambda=end_lambda, OdeMethodKwargs = OdeMethodKwargs, return_cartesian=True
-    )
-    x, y = ans[1][:,1], ans[1][:,2]
-
-    fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), squeeze=False)
-    ax = axes.ravel()
-    ax[0].scatter(x,y, s=size)
-    ax[0].scatter(scatter_val[0],scatter_val[1], c='{}'.format(dot_color))
-    ax[0].set_title(title)
-    if ticklabels != [[], []]:
-        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    ax[0].set_xlabel(xlabel)
-    ax[0].set_ylabel(ylabel)
-    ax[0].axis(axis)
-    plt.tick_params(axis='x', which=which[0], pad=pad[0])
-    plt.tick_params(axis='y', which=which[1], pad=pad[1])
-
-    if show:
-        plt.show()
-
-#Calculating an orbit's eccentricity and apehelion and making a simulation
-def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
-eccernity_calc = lambda x,y: x / (np.sqrt(x ** 2 + y ** 2)), title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []],
-rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
-    obj = Schwarzschild.from_coords(sph_obj, M)
-    ans = obj.calculate_trajectory(
-        end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
-    )
-
-    ans[0].shape, ans[1].shape
-
-    r = np.sqrt(np.square(ans[1][:, 1]) + np.square(ans[1][:, 2]))
-    i = np.argmax(r)
-    (r[i] * units.m).to(units.km)
-
-    ((ans[1][i][6]) * units.m / units.s).to(units.km / units.s)
-
-    xlist, ylist = ans[1][:, 1], ans[1][:, 2]
-    i = np.argmax(ylist)
-    x, y = xlist[i], ylist[i]
-    eccentricity = eccernity_calc(x, y)
-    eccentricity
-
-    if Object == None:
-        Sun = Body(name="Sun", mass=M, parent=None)
-        Object = Body(name="Earth", differential=sph_obj, parent=Sun)
-        
-    geodesic = Geodesic(body=Object, time=0 * units.s, end_lambda=end_lambda, step_size=OdeMethodKwargs["stepsize"])
-
-    sgp = GeodesicPlotter()
-    sgp.plot(geodesic)
-    fig = plt.gcf()
-    ax = fig.get_axes()
-    ax[0].set_title(title)
-    ax[0].set_xlabel(xlabel)
-    ax[0].set_ylabel(ylabel)
-    if ticklabels != [[], []]:
-        ax[0].set_xticklabels(ticklabels[0], rotation = rotation[0], fontsize = fontsize[0], va=va[0], ha=ha[0])
-        ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
-    ax[0].axis(axis)
-    fig.set_size_inches(figsize_inches[0], figsize_inches[1])
-    plt.tick_params(axis='x', which=which[0], pad=pad[0])
-    plt.tick_params(axis='y', which=which[1], pad=pad[1])
-
-    if show:
-        plt.show()
+exec((open("extensions.py").read()), globals(), locals())
