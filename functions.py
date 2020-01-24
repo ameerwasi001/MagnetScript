@@ -197,14 +197,14 @@ context='paper', style=None, usePlot='default', rc=[{}, {}], font_scale=1, alpha
         return rank.entropy(image, disk(disk_entropy))
 
 def bright_scale(image, data=False, outer_circle=False, grayscale=True, dotted_lines=True, figsize=[6,4], cmap='gray', contrast = 255,
-inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)), outer_mask = 0, image_scaler = 87,
+inds_x = lambda image: np.arange(len(image)), inds_y =lambda inds_x, image: ((4 * inds_x) % len(image)), outer_mask = 0, gray_scaler = 87,
 outer_disk_mask = lambda X, Y, l_x, l_y: (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (l_x / 2)**2, dotter=0, cutter=0, output=True):
     if not data:
         image = imread(image)
 
     if grayscale:
         image[:10] = cutter
-        mask = image < image_scaler
+        mask = image < gray_scaler
         image[mask] = contrast
 
     if dotted_lines:
@@ -291,13 +291,11 @@ disk_denonised = 2, disk_markers = 5, disk_gradient = 2):
     # process the watershed
     labels = watershed(gradient, markers)
 
-    evluated = eval('outvar')
-
     if output:
         # display results
         fig, axes = plt.subplots(nrows=1, ncols=1, figsize=(figsize[0], figsize[1]), sharex=True, sharey=True, squeeze=False)
         ax = axes.ravel()
-        ax[0].imshow(eval(evluated), plt.cm.get_cmap(cmap), interpolation=interpolation)
+        ax[0].imshow(eval(eval('outvar')), plt.cm.get_cmap(cmap), interpolation=interpolation)
         ax[0].set_title(title)
 
 
@@ -307,7 +305,7 @@ disk_denonised = 2, disk_markers = 5, disk_gradient = 2):
         fig.tight_layout()
         plt.show()
     else:
-        return eval(evluated)
+        return eval(eval('outvar'))
 
 
 #Show image with MagnetScript
@@ -415,7 +413,8 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', which=['maj
 #Calculating an orbit's eccentricity and apehelion and making a simulation
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
 eccernity_calc = lambda x,y: x / (np.sqrt(x ** 2 + y ** 2)), title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []],
-rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
+r_figure = lambda ans: np.sqrt(np.square(ans[1][:, 1]) + np.square(ans[1][:, 2])), rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on',
+figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
@@ -423,7 +422,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', figsize_inc
 
     ans[0].shape, ans[1].shape
 
-    r = np.sqrt(np.square(ans[1][:, 1]) + np.square(ans[1][:, 2]))
+    r = r_figure(ans)
     i = np.argmax(r)
     (r[i] * units.m).to(units.km)
 
