@@ -414,7 +414,7 @@ rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on', which=['maj
 def orbit_eccer_sim(sph_obj, M, end_lambda=((1 * units.year).to(units.s)).value, OdeMethodKwargs = {"stepsize": ((5 * units.min).to(units.s)).value}, Object=None,
 eccernity_calc = lambda x,y: x / (np.sqrt(x ** 2 + y ** 2)), title="Orbit's eccentricity", xlabel='', ylabel='', figsize=[5.5,6.0], ticklabels=[[], []],
 r_figure = lambda ans: np.sqrt(np.square(ans[1][:, 1]) + np.square(ans[1][:, 2])), rotation=[0,0], va=['top', 'top'], ha=['right', 'right'], axis='on',
-figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
+figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], time=0 * units.s, show=True):
     obj = Schwarzschild.from_coords(sph_obj, M)
     ans = obj.calculate_trajectory(
         end_lambda=end_lambda, OdeMethodKwargs=OdeMethodKwargs, return_cartesian=True
@@ -438,7 +438,7 @@ figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], show=True):
         Sun = Body(name="Sun", mass=M, parent=None)
         Object = Body(name="Earth", differential=sph_obj, parent=Sun)
         
-    geodesic = Geodesic(body=Object, time=0 * units.s, end_lambda=end_lambda, step_size=OdeMethodKwargs["stepsize"])
+    geodesic = Geodesic(body=Object, time=time, end_lambda=end_lambda, step_size=OdeMethodKwargs["stepsize"])
 
     sgp = GeodesicPlotter()
     sgp.plot(geodesic)
