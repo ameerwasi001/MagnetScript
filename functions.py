@@ -289,7 +289,7 @@ disk_denonised = 2, disk_markers = 5, disk_gradient = 2, gradienter = 10):
     gradient = rank.gradient(denoised, disk(disk_gradient))
 
     # process the watershed
-    labels = watershed(gradient, markers)
+    labels = watershed(gradient, markers) if outvar == "labels" else None
 
     if output:
         # display results
