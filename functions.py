@@ -336,11 +336,9 @@ xlabel='', ylabel='', context='paper', style=None, usePlot='default', rc=[{}, {}
     ax[0].set_yticklabels(ticklabels[1], rotation = rotation[1], fontsize = fontsize[1], va=va[1], ha=ha[1])
     plt.tick_params(axis='x', which=which[0], pad=pad[0])
     plt.tick_params(axis='y', which=which[1], pad=pad[1])
-
-    for a in ax:
-        a.axis(axis)
-        a.set_xlabel(xlabel)
-        a.set_ylabel(ylabel)
+    ax[0].axis(axis)
+    ax[0].set_xlabel(xlabel)
+    ax[0].set_ylabel(ylabel)
 
     fig.tight_layout()
     #set usePlot
@@ -426,13 +424,10 @@ figsize_inches=[6.0,6.5], which=['major', 'major'], pad=[10,10], time=0 * units.
     i = np.argmax(r)
     (r[i] * units.m).to(units.km)
 
-    ((ans[1][i][6]) * units.m / units.s).to(units.km / units.s)
-
     xlist, ylist = ans[1][:, 1], ans[1][:, 2]
     i = np.argmax(ylist)
     x, y = xlist[i], ylist[i]
     eccentricity = eccernity_calc(x, y)
-    eccentricity
 
     if Object == None:
         Sun = Body(name="Sun", mass=M, parent=None)
