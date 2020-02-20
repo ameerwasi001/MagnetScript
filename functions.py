@@ -39,6 +39,7 @@ from skimage.color import *
 from skimage.segmentation import *
 from skimage.transform import *
 from skimage.feature import *
+from skimage.exposure import *
 
 import inspect
 from importlib.machinery import SourceFileLoader
@@ -232,7 +233,7 @@ outer_disk_mask = lambda X, Y, l_x, l_y: (X - l_x / 2)**2 + (Y - l_y / 2)**2 > (
 #Compact segmentation of an image with MagnetScript
 def compact_segmentation_image(image, data=False, outvar='segments_watershed', title='Compact watershed',
 figsize=[6,4], output=True, scale=100, sigma=0.5, min_size=50, n_segments=250, compactness=10, kernal_siz=3, max_dist=6, ratio=0.5, markers=250, gray=True,
-supress=False, show=True):
+show=True):
     if not data:
         image = imread(image, as_gray=gray)
     else:
@@ -244,11 +245,8 @@ supress=False, show=True):
 
     segments_fz = felzenszwalb(image, scale=scale, sigma=sigma, min_size=min_size) if outvar == 'segments_fz' else None
     segments_slic = slic(image, n_segments=n_segments, compactness=compactness, sigma=sigma) if outvar == 'segments_slic' else None
-    try:
-        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio) if outvar == 'segments_quick' else None
-    except:
-        if not supress:
-            print("Quick segments not declared")
+    if outvar == 'segments_quick':
+        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio)
     gradient = sobel(rgb2gray(image))
     segments_watershed = watershed(gradient, markers=markers, compactness=compactness) if outvar == 'segments_watershed' else None
 
