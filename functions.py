@@ -245,8 +245,7 @@ show=True):
 
     segments_fz = felzenszwalb(image, scale=scale, sigma=sigma, min_size=min_size) if outvar == 'segments_fz' else None
     segments_slic = slic(image, n_segments=n_segments, compactness=compactness, sigma=sigma) if outvar == 'segments_slic' else None
-    if outvar == 'segments_quick':
-        segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio)
+    segments_quick = quickshift(image, kernel_size=kernal_siz, max_dist=max_dist, ratio=ratio) if outvar == 'segments_quick' else None
     gradient = sobel(rgb2gray(image))
     segments_watershed = watershed(gradient, markers=markers, compactness=compactness) if outvar == 'segments_watershed' else None
 
